@@ -8,6 +8,25 @@ import Footer from "@/components/Footer";
 import ShowreelModal from "@/components/ShowreelModal";
 import {ArrowUpRight,ArrowRight,Sparkles,Cpu,Zap,ShieldCheck,CheckCircle2,Star,} from "lucide-react";
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Fixbug Infotech",
+  url: "https://www.fixbuginfotech.com",
+  logo: "https://www.fixbuginfotech.com/logo.png",
+  description:
+    "AI-powered software development agency building autonomous workflows, custom LLM products, and high-performance web platforms for enterprises.",
+  sameAs: [
+    // "https://www.linkedin.com/company/fixbuginfotech",
+    // "https://twitter.com/fixbuginfotech",
+  ],
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "5",
+    reviewCount: "200",
+  },
+};
+
 export default function HomePage() {
   const videoRef = useRef(null);
 
@@ -20,32 +39,44 @@ export default function HomePage() {
   const avatars = [
     {
       src: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80",
-      alt: "Client 1",
+      alt: "Fixbug Infotech client — enterprise software project",
     },
     {
       src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80",
-      alt: "Client 2",
+      alt: "Fixbug Infotech client — AI automation project",
     },
     {
       src: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80",
-      alt: "Client 3",
+      alt: "Fixbug Infotech client — web platform project",
     },
     {
       src: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80",
-      alt: "Client 4",
+      alt: "Fixbug Infotech client — cloud architecture project",
     },
   ];
 
   return (
     <div className="min-h-screen bg-cream text-charcoal flex flex-col selection:bg-accent/20 selection:text-accent">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navbar />
 
       <main className="grow">
         {/* ================= HERO SECTION ================= */}
         <section className="relative min-h-screen w-full flex items-center overflow-hidden pt-24 pb-16">
           {/* Background Video */}
-          <video  ref={videoRef}  autoPlay  muted  loop  playsInline
-            className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none" >
+          <video
+            ref={videoRef}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-label="Fixbug Infotech creative studio showreel background"
+            className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none"
+          >
             <source
               src="https://strvid.nyc3.cdn.digitaloceanspaces.com/motionsite/creative_studio_video.mp4"
               type="video/mp4"
@@ -67,7 +98,7 @@ export default function HomePage() {
                 </span>
               </div>
 
-              {/* Headline */}
+              {/* Headline (single H1 for the page — good for SEO) */}
               <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-charcoal leading-[1.05] mb-6">
                 Software That{" "}
                 <span className="font-display italic text-accent font-normal">
@@ -83,7 +114,7 @@ export default function HomePage() {
 
               {/* Call to Actions */}
               <div className="flex flex-wrap items-center gap-4 mb-12">
-                <Link 
+                <Link
                   href={"/product"}
                   className="group inline-flex items-center gap-2 bg-charcoal text-cream px-7 py-3.5 rounded-full font-medium text-sm sm:text-base hover:bg-accent transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer">
                   <span>See Our Work</span>
@@ -117,7 +148,7 @@ export default function HomePage() {
                 </div>
 
                 <div>
-                  <div className="flex items-center gap-1 text-amber-500 mb-0.5">
+                  <div className="flex items-center gap-1 text-amber-500 mb-0.5" aria-hidden="true">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} className="w-3.5 h-3.5 fill-current" />
                     ))}
@@ -350,7 +381,7 @@ export default function HomePage() {
         {/* ================= FEATURED WORK / PRODUCT TEASER ================= */}
         <section className="py-24 sm:py-32 bg-cream">
           <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-            
+
             {/* Heading  */}
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
               <div>
@@ -373,14 +404,14 @@ export default function HomePage() {
               </Link>
             </div>
 
-            {/* Projects */} 
+            {/* Projects */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
                 {/* Project 1 - Portfolio */}
                 <div className="group rounded-3xl bg-cream-soft border border-cream-border overflow-hidden hover:shadow-2xl transition-all duration-500">
     <div className="relative h-72 sm:h-80 w-full overflow-hidden">
       <Image
         src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&auto=format&fit=crop&q=80"
-        alt="Portfolio Website"
+        alt="Personal portfolio website project by Fixbug Infotech"
         fill
         className="object-cover group-hover:scale-105 transition-transform duration-700"
       />
@@ -395,7 +426,7 @@ export default function HomePage() {
         <h3 className="text-2xl font-bold text-charcoal group-hover:text-accent transition-colors">
           Personal Portfolio
         </h3>
- 
+
       </div>
 
       <p className="text-muted text-sm sm:text-base leading-relaxed mb-6">
@@ -404,16 +435,16 @@ export default function HomePage() {
         was on keeping the design simple, fast, and easy to navigate across
         desktop and mobile devices.
       </p>
- 
+
     </div>
                 </div>
 
-                 {/* Project 2 - CarCare Tracker */} 
+                 {/* Project 2 - CarCare Tracker */}
                <div className="group rounded-3xl bg-cream-soft border border-cream-border overflow-hidden hover:shadow-2xl transition-all duration-500">
   <div className="relative h-72 sm:h-80 w-full overflow-hidden">
     <Image
       src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&auto=format&fit=crop&q=80"
-      alt="Car Rental Website"
+      alt="Car rental booking website built with the MERN stack"
       fill
       className="object-cover group-hover:scale-105 transition-transform duration-700"
     />
@@ -441,7 +472,7 @@ export default function HomePage() {
       based on their travel plans.
     </p>
 
-    <div className="flex flex-wrap items-center gap-4"> 
+    <div className="flex flex-wrap items-center gap-4">
 
       <Link
         href="/car-rental"
@@ -452,9 +483,9 @@ export default function HomePage() {
       </Link>
     </div>
   </div>
-              </div> 
+              </div>
 
-            </div> 
+            </div>
 
 
           </div>
@@ -479,15 +510,16 @@ export default function HomePage() {
                   line of software we ship is crafted to solve high-stakes challenges
                   with speed, security, and elegance.
                 </p>
-                <div className="p-6 rounded-2xl bg-cream border border-cream-border">
+                <blockquote className="p-6 rounded-2xl bg-cream border border-cream-border">
                   <p className="italic font-display text-xl text-charcoal mb-3">
                     &ldquo;Fixbug Infotech delivered our AI core 2 months ahead of
                     schedule with spotless reliability.&rdquo;
                   </p>
-                  <p className="text-xs font-bold uppercase tracking-wider text-muted">
+                  <cite className="text-xs font-bold uppercase tracking-wider text-muted not-italic block">
                     — VP of Engineering, HyperScale Global
-                  </p>
-                </div>
+                  </cite>
+                  
+                </blockquote>
               </div>
 
               <div className="lg:col-span-7 space-y-6">
@@ -589,7 +621,7 @@ export default function HomePage() {
       <Footer />
 
       {/* Showreel Modal */}
-      <ShowreelModal   />
+      <ShowreelModal />
     </div>
   );
 }

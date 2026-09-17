@@ -16,9 +16,72 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata = {
-  title: "Fixbug Infotech — Software That Thinks",
+  metadataBase: new URL("https://www.fixbuginfotech.com"), // replace with your real domain
+  title: {
+    default: "Fixbug Infotech — AI Software Development & Automation Agency",
+    template: "%s | Fixbug Infotech",
+  },
   description:
-    "AI-powered software solutions. We build, automate, and scale intelligent systems for businesses worldwide.",
+    "Fixbug Infotech builds AI-powered software, autonomous workflows, and high-performance web platforms for enterprises. Custom LLMs, RAG pipelines, Next.js apps, and cloud-native architecture.",
+  keywords: [
+    "AI software development",
+    "AI automation agency",
+    "custom LLM development",
+    "RAG pipeline development",
+    "Next.js development agency",
+    "enterprise software development",
+    "cloud DevOps architecture",
+    "Fixbug Infotech",
+  ],
+  authors: [{ name: "Fixbug Infotech" }],
+  creator: "Fixbug Infotech",
+  publisher: "Fixbug Infotech",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://www.fixbuginfotech.com",
+    siteName: "Fixbug Infotech",
+    title: "Fixbug Infotech — AI Software Development & Automation Agency",
+    description:
+      "We engineer AI-powered digital products, autonomous workflows, and modern web platforms for forward-thinking enterprises.",
+    images: [
+      {
+        url: "/og-image.jpg", // add a real 1200x630 image to /public
+        width: 1200,
+        height: 630,
+        alt: "Fixbug Infotech — Software That Thinks",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Fixbug Infotech — AI Software Development & Automation Agency",
+    description:
+      "We engineer AI-powered digital products, autonomous workflows, and modern web platforms for forward-thinking enterprises.",
+    images: ["/og-image.jpg"],
+    // creator: "@yourhandle",
+  },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon-16x16.png",
+    apple: "/apple-touch-icon.png",
+  },
+  // verification: {
+  //   google: "your-google-search-console-verification-code",
+  // },
 };
 
 export default function RootLayout({ children }) {

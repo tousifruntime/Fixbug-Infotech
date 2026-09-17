@@ -4,10 +4,52 @@ import Footer from "@/components/Footer";
 import Link from "next/link";
 import {ArrowUpRight,ArrowRight,Sparkles,Bot,Globe,Workflow,Cloud,Layers,Cpu,ShieldCheck,Zap,Code2,Database,Terminal,} from "lucide-react";
 
+const SITE_URL = "https://www.fixbuginfotech.com";
+
 export const metadata = {
   title: "AI & Software Engineering Services | Fixbug Infotech",
   description:
-    "Explore our core engineering capabilities: AI Product Development, Autonomous Workflows, Modern Web Applications, and Cloud Architecture.",
+    "Explore Fixbug Infotech's core engineering capabilities: AI product development, autonomous workflow automation, full-stack web platforms, cloud & DevOps architecture, and AI UX design.",
+  keywords: [
+    "AI software engineering services",
+    "LLM development services",
+    "RAG pipeline development",
+    "workflow automation agency",
+    "Next.js development services",
+    "cloud DevOps consulting",
+    "AI UX design",
+    "Fixbug Infotech services",
+  ],
+  alternates: {
+    canonical: "/service",
+  },
+  openGraph: {
+    type: "website",
+    url: `${SITE_URL}/service`,
+    siteName: "Fixbug Infotech",
+    title: "AI & Software Engineering Services | Fixbug Infotech",
+    description:
+      "We architect bespoke AI systems and embed cutting-edge intelligence into enterprise workflows — from LLMs and RAG to cloud-native infrastructure.",
+    images: [
+      {
+        url: "/og-service.jpg", // add a 1200x630 image to /public
+        width: 1200,
+        height: 630,
+        alt: "Fixbug Infotech — Services",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AI & Software Engineering Services | Fixbug Infotech",
+    description:
+      "We architect bespoke AI systems and embed cutting-edge intelligence into enterprise workflows — from LLMs and RAG to cloud-native infrastructure.",
+    images: ["/og-service.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 const services = [
@@ -140,8 +182,67 @@ const techStack = [
 ];
 
 export default function ServicesPage() {
+  // Service structured data — one entry per capability
+  const servicesJsonLd = services.map((service) => ({
+    "@context": "https://schema.org",
+    "@type": "Service",
+    serviceType: service.title,
+    name: service.title,
+    description: service.description,
+    provider: {
+      "@type": "Organization",
+      name: "Fixbug Infotech",
+      url: SITE_URL,
+    },
+    areaServed: "Worldwide",
+    category: service.category,
+  }));
+
+  // HowTo-style methodology as an ItemList (process steps)
+  const processJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Fixbug Infotech Delivery Methodology",
+    itemListElement: processSteps.map((p, idx) => ({
+      "@type": "ListItem",
+      position: idx + 1,
+      name: p.title,
+      description: p.description,
+    })),
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Services",
+        item: `${SITE_URL}/service`,
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-cream text-charcoal flex flex-col selection:bg-accent selection:text-cream-soft">
+      {servicesJsonLd.map((jsonLd, idx) => (
+        <script
+          key={idx}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      ))}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(processJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+
       <Navbar variant="solid" />
 
       {/* Hero Section */}
@@ -168,7 +269,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Editorial Services List */}
-      <section className="py-20 md:py-28">
+      <section className="py-20 md:py-28" aria-label="Our services">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-6 border-b border-cream-border">
             <div>
@@ -189,18 +290,19 @@ export default function ServicesPage() {
           </div>
 
           <div className="space-y-0">
-            {services.map((service, index) => {
+            {services.map((service) => {
               const Icon = service.icon;
               return (
-                <div
+                <article
                   key={service.id}
+                  id={`service-${service.id}`}
                   className="group relative border-t border-cream-border py-12 md:py-16 transition-colors duration-300 hover:bg-cream-soft/70 px-4 md:px-8 rounded-2xl"
                 >
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                     {/* ID & Category */}
                     <div className="lg:col-span-3 flex flex-col justify-between">
                       <div className="flex items-center gap-4 mb-2">
-                        <span className="text-3xl md:text-4xl font-light text-muted/60 group-hover:text-accent transition-colors">
+                        <span className="text-3xl md:text-4xl font-light text-muted/60 group-hover:text-accent transition-colors" aria-hidden="true">
                           {service.id}
                         </span>
                         <span className="text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full bg-cream-border/50 text-muted">
@@ -209,22 +311,22 @@ export default function ServicesPage() {
                       </div>
                       <div className="hidden lg:block mt-6">
                         <div className="w-12 h-12 rounded-xl bg-cream flex items-center justify-center border border-cream-border text-charcoal group-hover:text-accent group-hover:border-accent/40 transition-all">
-                          <Icon className="w-6 h-6" />
+                          <Icon className="w-6 h-6" aria-hidden="true" />
                         </div>
                       </div>
                     </div>
 
                     {/* Title & Description */}
                     <div className="lg:col-span-5">
-                      <h3 className="text-2xl md:text-3xl font-bold tracking-tight mb-4 text-charcoal group-hover:text-accent transition-colors">
+                      <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-4 text-charcoal group-hover:text-accent transition-colors">
                         {service.title}
-                      </h3>
+                      </h2>
                       <p className="text-muted text-base leading-relaxed mb-6">
                         {service.description}
                       </p>
 
                       <div className="inline-flex items-center gap-2 text-xs font-semibold text-charcoal bg-cream px-3.5 py-1.5 rounded-full border border-cream-border">
-                        <Zap className="w-3.5 h-3.5 text-accent" />
+                        <Zap className="w-3.5 h-3.5 text-accent" aria-hidden="true" />
                         <span>{service.impact}</span>
                       </div>
                     </div>
@@ -241,7 +343,7 @@ export default function ServicesPage() {
                               key={i}
                               className="flex items-center gap-2 text-sm text-charcoal/80"
                             >
-                              <span className="w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
+                              <span className="w-1.5 h-1.5 rounded-full bg-accent shrink-0" aria-hidden="true" />
                               <span>{cap}</span>
                             </li>
                           ))}
@@ -251,15 +353,16 @@ export default function ServicesPage() {
                       <div className="mt-8 flex justify-end">
                         <Link
                           href="/contact"
+                          aria-label={`Consult on ${service.title}`}
                           className="inline-flex items-center gap-2 text-sm font-semibold text-charcoal group-hover:text-accent transition-colors"
                         >
                           <span>Consult on this</span>
-                          <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                          <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
                         </Link>
                       </div>
                     </div>
                   </div>
-                </div>
+                </article>
               );
             })}
           </div>
@@ -267,13 +370,13 @@ export default function ServicesPage() {
       </section>
 
       {/* How We Deliver Process Section */}
-      <section className="py-20 md:py-28 bg-cream-soft border-y border-cream-border">
+      <section className="py-20 md:py-28 bg-cream-soft border-y border-cream-border" aria-labelledby="methodology-heading">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="max-w-2xl mb-16">
             <span className="text-accent text-xs md:text-sm font-semibold tracking-widest uppercase mb-2 block">
               METHODOLOGY
             </span>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
+            <h2 id="methodology-heading" className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
               How We{" "}
               <span className="font-display italic text-accent font-normal">
                 Deliver
@@ -285,14 +388,14 @@ export default function ServicesPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <ol className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 list-none p-0 m-0">
             {processSteps.map((p, idx) => (
-              <div
+              <li
                 key={p.step}
                 className="relative bg-cream p-8 rounded-2xl border border-cream-border hover:border-accent/40 transition-all flex flex-col justify-between"
               >
                 <div>
-                  <span className="text-4xl font-display italic text-accent font-normal block mb-6">
+                  <span className="text-4xl font-display italic text-accent font-normal block mb-6" aria-hidden="true">
                     {p.step}
                   </span>
                   <h3 className="text-xl font-bold tracking-tight mb-3">
@@ -304,22 +407,22 @@ export default function ServicesPage() {
                 </div>
                 <div className="mt-6 pt-4 border-t border-cream-border/60 flex items-center justify-between text-xs text-muted">
                   <span>Phase 0{idx + 1}</span>
-                  <ArrowRight className="w-4 h-4 text-accent" />
+                  <ArrowRight className="w-4 h-4 text-accent" aria-hidden="true" />
                 </div>
-              </div>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </section>
 
       {/* Tech Stack Grid */}
-      <section className="py-20 md:py-28">
+      <section className="py-20 md:py-28" aria-labelledby="techstack-heading">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <span className="text-accent text-xs md:text-sm font-semibold tracking-widest uppercase mb-2 block">
               TECHNOLOGY ECOSYSTEM
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
+            <h2 id="techstack-heading" className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
               Our Core{" "}
               <span className="font-display italic text-accent font-normal">
                 Tech Stack
@@ -331,9 +434,9 @@ export default function ServicesPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 list-none p-0 m-0">
             {techStack.map((tech, idx) => (
-              <div
+              <li
                 key={idx}
                 className="bg-cream-soft border border-cream-border p-5 rounded-xl hover:border-accent/50 hover:bg-cream transition-all group flex flex-col justify-between"
               >
@@ -341,14 +444,14 @@ export default function ServicesPage() {
                   <span className="text-xs font-medium uppercase tracking-wider text-muted/70">
                     {tech.category}
                   </span>
-                  <Sparkles className="w-3.5 h-3.5 text-cream-border group-hover:text-accent transition-colors" />
+                  <Sparkles className="w-3.5 h-3.5 text-cream-border group-hover:text-accent transition-colors" aria-hidden="true" />
                 </div>
                 <span className="font-semibold text-charcoal text-base md:text-lg group-hover:text-accent transition-colors">
                   {tech.name}
                 </span>
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
@@ -359,7 +462,7 @@ export default function ServicesPage() {
             • START YOUR TRANSFORMATION •
           </span>
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-6 leading-tight">
-            Have a project in mind? Let's build something{" "}
+            Have a project in mind? Let&apos;s build something{" "}
             <span className="font-display italic text-accent font-normal">
               intelligent.
             </span>
@@ -374,7 +477,7 @@ export default function ServicesPage() {
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-accent text-cream-soft px-8 py-4 rounded-full text-base font-semibold hover:bg-accent/90 transition-all shadow-lg hover:shadow-accent/20"
             >
               <span>Schedule Architecture Call</span>
-              <ArrowUpRight className="w-5 h-5" />
+              <ArrowUpRight className="w-5 h-5" aria-hidden="true" />
             </Link>
             <Link
               href="/product"

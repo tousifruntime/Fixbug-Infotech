@@ -3,19 +3,51 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowUpRight,
-  TrendingUp,
-  Sparkles,
-  ExternalLink,
-  ShieldCheck,
-  CheckCircle2,
-} from "lucide-react";
+import {ArrowUpRight,TrendingUp,Sparkles,ExternalLink,ShieldCheck,CheckCircle2,} from "lucide-react";
+
+const SITE_URL = "https://www.fixbuginfotech.com";
 
 export const metadata = {
-  title: "Products & Case Studies | Fixbug Infotech",
-  description:
-    "Explore our portfolio of intelligent software products, autonomous agent pipelines, and enterprise systems built for global leaders.",
+  title: "Products & Case Studies — AI & Software Portfolio | Fixbug Infotech",
+  description: "Explore Fixbug Infotech's portfolio of AI-powered products: autonomous DevOps agents, document automation, personalization engines, clinical voice scribes, and real-time risk analytics — built for global enterprises.",
+  keywords: [
+    "AI case studies",
+    "enterprise AI products",
+    "AI software portfolio",
+    "autonomous agent case study",
+    "Fixbug Infotech projects",
+    "AI product development examples",
+  ],
+  alternates: {
+    canonical: "/product",
+  },
+  openGraph: {
+    type: "website",
+    url: `${SITE_URL}/product`,
+    siteName: "Fixbug Infotech",
+    title: "Products & Case Studies | Fixbug Infotech",
+    description:
+      "A curated portfolio of mission-critical AI systems and enterprise platforms engineered by Fixbug Infotech, with measurable commercial impact.",
+    images: [
+      {
+        url: "/og-product.jpg", // add a 1200x630 image to /public
+        width: 1200,
+        height: 630,
+        alt: "Fixbug Infotech — Products & Case Studies",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Products & Case Studies | Fixbug Infotech",
+    description:
+      "A curated portfolio of mission-critical AI systems and enterprise platforms engineered by Fixbug Infotech, with measurable commercial impact.",
+    images: ["/og-product.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 const caseStudies = [
@@ -116,8 +148,61 @@ const caseStudies = [
 ];
 
 export default function ProductPage() {
+  // CollectionPage + itemized CreativeWork/Product structured data
+  const collectionJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Products & Case Studies | Fixbug Infotech",
+    url: `${SITE_URL}/product`,
+    description:
+      "A curated selection of AI products and enterprise platforms engineered by Fixbug Infotech.",
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: caseStudies.map((project, idx) => ({
+        "@type": "ListItem",
+        position: idx + 1,
+        item: {
+          "@type": "CreativeWork",
+          name: project.title,
+          description: project.description,
+          image: project.image,
+          dateCreated: project.year,
+          about: project.subtitle,
+          creator: {
+            "@type": "Organization",
+            name: "Fixbug Infotech",
+          },
+          keywords: project.tags.join(", "),
+        },
+      })),
+    },
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Products",
+        item: `${SITE_URL}/product`,
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-cream text-charcoal flex flex-col selection:bg-accent selection:text-cream-soft">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+
       <Navbar variant="solid" />
 
       {/* Hero Section */}
@@ -144,12 +229,12 @@ export default function ProductPage() {
       </section>
 
       {/* Case Studies Showcase */}
-      <section className="py-20 md:py-28">
+      <section className="py-20 md:py-28" aria-label="Case studies">
         <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-24 md:space-y-36">
           {caseStudies.map((project, index) => {
             const isEven = index % 2 === 1;
             return (
-              <div
+              <article
                 key={project.id}
                 className={`grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center ${
                   isEven ? "lg:flex-row-reverse" : ""
@@ -164,7 +249,7 @@ export default function ProductPage() {
                   <div className="group relative overflow-hidden rounded-3xl border border-cream-border bg-cream-soft aspect-[16/10] shadow-sm hover:shadow-xl transition-all duration-500">
                     <Image
                       src={project.image}
-                      alt={project.title}
+                      alt={`${project.title} — ${project.subtitle}, case study screenshot`}
                       fill
                       sizes="(max-width: 1024px) 100vw, 60vw"
                       className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
@@ -174,7 +259,7 @@ export default function ProductPage() {
                         <span className="text-xs font-semibold uppercase tracking-wider text-accent mb-1 block">
                           {project.client} • {project.year}
                         </span>
-                        <h4 className="text-xl font-bold">{project.title}</h4>
+                        <p className="text-xl font-bold">{project.title}</p>
                       </div>
                     </div>
                   </div>
@@ -187,7 +272,7 @@ export default function ProductPage() {
                   }`}
                 >
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="text-2xl font-light text-accent">
+                    <span className="text-2xl font-light text-accent" aria-hidden="true">
                       {project.id}
                     </span>
                     <span className="text-xs font-semibold uppercase tracking-wider text-muted bg-cream-soft px-3 py-1 rounded-full border border-cream-border">
@@ -195,9 +280,9 @@ export default function ProductPage() {
                     </span>
                   </div>
 
-                  <h3 className="text-3xl sm:text-4xl font-bold tracking-tight text-charcoal mb-2">
+                  <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-charcoal mb-2">
                     {project.title}
-                  </h3>
+                  </h2>
                   <p className="text-sm font-semibold text-accent uppercase tracking-wider mb-5">
                     {project.subtitle}
                   </p>
@@ -217,34 +302,35 @@ export default function ProductPage() {
                       </span>
                     </div>
                     <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center text-accent">
-                      <TrendingUp className="w-5 h-5" />
+                      <TrendingUp className="w-5 h-5" aria-hidden="true" />
                     </div>
                   </div>
 
                   {/* Tech Tags */}
                   <div className="mb-8">
-                    <div className="flex flex-wrap gap-2">
+                    <ul className="flex flex-wrap gap-2 list-none p-0 m-0">
                       {project.tags.map((tag, tIdx) => (
-                        <span
+                        <li
                           key={tIdx}
                           className="text-xs font-medium bg-cream px-3 py-1.5 rounded-lg border border-cream-border text-charcoal/80"
                         >
                           {tag}
-                        </span>
+                        </li>
                       ))}
-                    </div>
+                    </ul>
                   </div>
 
                   {/* Action Link */}
                   <Link
                     href="/contact"
+                    aria-label={`Request an architecture brief for ${project.title}`}
                     className="inline-flex items-center gap-2 border border-charcoal text-charcoal px-6 py-3 rounded-full text-sm font-semibold hover:bg-charcoal hover:text-cream-soft transition-all duration-300 group"
                   >
                     <span>Request Architecture Brief</span>
-                    <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
                   </Link>
                 </div>
-              </div>
+              </article>
             );
           })}
         </div>
@@ -257,7 +343,7 @@ export default function ProductPage() {
             • PARTNER WITH FIXBUG •
           </span>
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-6 leading-tight">
-            Have an ambitious project in mind? Let's build it{" "}
+            Have an ambitious project in mind? Let&apos;s build it{" "}
             <span className="font-display italic text-accent font-normal">
               together.
             </span>
@@ -272,7 +358,7 @@ export default function ProductPage() {
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-accent text-cream-soft px-8 py-4 rounded-full text-base font-semibold hover:bg-accent/90 transition-all shadow-lg hover:shadow-accent/20"
             >
               <span>Initiate Your Project</span>
-              <ArrowUpRight className="w-5 h-5" />
+              <ArrowUpRight className="w-5 h-5" aria-hidden="true" />
             </Link>
             <Link
               href="/service"
