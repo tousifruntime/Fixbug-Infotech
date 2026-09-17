@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import Link from "next/link";
 import {ArrowUpRight,Briefcase,GraduationCap,MapPin,Clock,Sparkles,Zap,Code2,Cpu,Laptop,CheckCircle2,ArrowRight,} from "lucide-react";
 
-const SITE_URL = "https://www.fixbuginfotech.com";
+const SITE_URL = "https://fixbuginfotech.online";
 
 export default function CareerPageClient() {
   const [activeFilter, setActiveFilter] = useState("all");

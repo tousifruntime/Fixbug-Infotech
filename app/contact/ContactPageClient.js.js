@@ -14,7 +14,7 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 
-const SITE_URL = "https://www.fixbuginfotech.com";
+const SITE_URL = "https://fixbuginfotech.online";
 
 function ContactFormContent() {
   const searchParams = useSearchParams();

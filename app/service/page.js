@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import Link from "next/link";
 import {ArrowUpRight,ArrowRight,Sparkles,Bot,Globe,Workflow,Cloud,Layers,Cpu,ShieldCheck,Zap,Code2,Database,Terminal,} from "lucide-react";
 
-const SITE_URL = "https://www.fixbuginfotech.com";
+const SITE_URL = "https://fixbuginfotech.online";
 
 export const metadata = {
   title: "AI & Software Engineering Services | Fixbug Infotech",
@@ -18,7 +18,9 @@ export const metadata = {
     "Next.js development services",
     "cloud DevOps consulting",
     "AI UX design",
-    "Fixbug Infotech services",
+    "Fixbug Infotech services",,
+    "Software services in ponda",
+    "IT services in ponda",
   ],
   alternates: {
     canonical: "/service",

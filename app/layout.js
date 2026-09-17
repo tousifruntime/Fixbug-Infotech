@@ -16,7 +16,7 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata = {
-  metadataBase: new URL("https://www.fixbuginfotech.com"), // replace with your real domain
+  metadataBase: new URL("https://fixbuginfotech.online"),
   title: {
     default: "Fixbug Infotech — AI Software Development & Automation Agency",
     template: "%s | Fixbug Infotech",
@@ -32,6 +32,8 @@ export const metadata = {
     "enterprise software development",
     "cloud DevOps architecture",
     "Fixbug Infotech",
+    "Software company in ponda",
+    "IT company in ponda",
   ],
   authors: [{ name: "Fixbug Infotech" }],
   creator: "Fixbug Infotech",
@@ -52,7 +54,7 @@ export const metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://www.fixbuginfotech.com",
+    url: "https://fixbuginfotech.online",
     siteName: "Fixbug Infotech",
     title: "Fixbug Infotech — AI Software Development & Automation Agency",
     description:

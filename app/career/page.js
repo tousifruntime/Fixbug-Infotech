@@ -12,13 +12,18 @@ export const metadata = {
     "AI internship Mumbai",
     "machine learning engineer jobs",
     "Next.js developer jobs",
+    "Software company in ponda",
+    "IT company in ponda",
+    "IT internship in ponda",
+    "Software internship in ponda",
+    
   ],
   alternates: {
     canonical: "/career",
   },
   openGraph: {
     type: "website",
-    url: "https://www.fixbuginfotech.com/career",
+    url: "https://fixbuginfotech.online/career",
     siteName: "Fixbug Infotech",
     title: "Careers — Join Fixbug Infotech",
     description:

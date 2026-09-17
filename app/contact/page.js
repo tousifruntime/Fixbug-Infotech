@@ -16,7 +16,7 @@ export const metadata = {
   },
   openGraph: {
     type: "website",
-    url: "https://www.fixbuginfotech.com/contact",
+    url: "https://fixbuginfotech.online/contact",
     siteName: "Fixbug Infotech",
     title: "Contact Fixbug Infotech",
     description:

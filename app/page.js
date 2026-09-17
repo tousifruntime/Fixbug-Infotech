@@ -12,8 +12,8 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "Fixbug Infotech",
-  url: "https://www.fixbuginfotech.com",
-  logo: "https://www.fixbuginfotech.com/logo.png",
+  url: "https://fixbuginfotech.online",
+  logo: "https://fixbuginfotech.online/logo.png",
   description:
     "AI-powered software development agency building autonomous workflows, custom LLM products, and high-performance web platforms for enterprises.",
   sameAs: [

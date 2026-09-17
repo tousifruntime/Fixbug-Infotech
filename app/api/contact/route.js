@@ -137,7 +137,7 @@ function buildEmailHtml({ fullName, email, phone, subject, message }) {
               <tr>
                 <td style="background-color: #f9f8f6; padding: 20px 36px; border-top: 1px solid #eeeeee;">
                   <p style="margin: 0; color: #9a9a9a; font-size: 12px; line-height: 1.6;">
-                    This message was sent from the contact form on fixbuginfotech.com.
+                    This message was sent from the contact form on fixbuginfotech.online.
                     Reply-to has been set to the sender's email address above.
                   </p>
                 </td>

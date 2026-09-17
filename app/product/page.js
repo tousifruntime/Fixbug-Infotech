@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import {ArrowUpRight,TrendingUp,Sparkles,ExternalLink,ShieldCheck,CheckCircle2,} from "lucide-react";
 
-const SITE_URL = "https://www.fixbuginfotech.com";
+const SITE_URL = "https://fixbuginfotech.online";
 
 export const metadata = {
   title: "Products & Case Studies — AI & Software Portfolio | Fixbug Infotech",
