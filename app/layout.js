@@ -24,17 +24,20 @@ export const metadata = {
   description:
     "Fixbug Infotech builds AI-powered software, autonomous workflows, and high-performance web platforms for enterprises. Custom LLMs, RAG pipelines, Next.js apps, and cloud-native architecture.",
   keywords: [
-    "AI software development",
-    "AI automation agency",
-    "custom LLM development",
-    "RAG pipeline development",
-    "Next.js development agency",
-    "enterprise software development",
-    "cloud DevOps architecture",
-    "Fixbug Infotech",
-    "Software company in ponda",
-    "IT company in ponda",
-  ],
+  "Fixbug Infotech",
+  "web development company in Ponda",
+  "website designer in Ponda",
+  "IT company in Ponda",
+  "software company in Ponda",
+  "web development company in Goa",
+  "AI software development",
+  "AI automation agency",
+  "custom LLM development",
+  "RAG pipeline development",
+  "Next.js development",
+  "enterprise software development",
+  "IT support in Ponda",
+],
   authors: [{ name: "Fixbug Infotech" }],
   creator: "Fixbug Infotech",
   publisher: "Fixbug Infotech",
@@ -56,10 +59,10 @@ export const metadata = {
     locale: "en_US",
     url: "https://fixbuginfotech.online",
     siteName: "Fixbug Infotech",
-    title: "Fixbug Infotech — AI Software Development & Automation Agency",
-    description:
-      "We engineer AI-powered digital products, autonomous workflows, and modern web platforms for forward-thinking enterprises.",
-    images: [
+     default: "Fixbug Infotech | Web Development & IT Company in Ponda, Goa",
+     template: "%s | Fixbug Infotech",
+    description:  "Fixbug Infotech is a web development and IT company in Ponda, Goa, providing website development, AI software, automation, IT solutions, and technology services for businesses and individuals.",
+     images: [
       {
         url: "/og-image.jpg", // add a real 1200x630 image to /public
         width: 1200,
