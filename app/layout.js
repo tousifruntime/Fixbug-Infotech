@@ -1,6 +1,7 @@
 import { Plus_Jakarta_Sans, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import LenisProvider from "@/components/LenisProvider";
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-sans",
@@ -91,12 +92,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="en"
-      className={`${plusJakarta.variable} ${instrumentSerif.variable} h-full antialiased`}
-    >
+    <html  lang="en" className={`${plusJakarta.variable} ${instrumentSerif.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col font-sans">
         <LenisProvider>{children}</LenisProvider>
+        <GoogleAnalytics gaId="G-4GH13Y33VR" />
       </body>
     </html>
   );
