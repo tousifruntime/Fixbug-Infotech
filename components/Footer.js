@@ -100,10 +100,10 @@ export default function Footer() {
             <div className="space-y-3 text-sm text-cream-soft/70">
               <p>
                 <a
-                  href="mailto:hello@fixbuginfotech.com"
+                  href="mailto:fixbuginfotech@gmail.com"
                   className="hover:text-accent transition-colors block text-cream-soft font-medium"
                 >
-                  hello@fixbuginfotech.com
+                  fixbuginfotech@gmail.com
                 </a>
               </p>
               <p>
@@ -111,11 +111,11 @@ export default function Footer() {
                   href="tel:+919876543210"
                   className="hover:text-accent transition-colors"
                 >
-                  +91 98765 43210
+                  +91 7776069948
                 </a>
               </p>
               <p className="text-cream-soft/60">
-                Mumbai, Maharashtra, India
+                Ponda, Goa, India
               </p>
               <div className="pt-3">
                 <Link

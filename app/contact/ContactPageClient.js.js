@@ -2,20 +2,108 @@
 
 import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import {
-  Mail,
-  MapPin,
-  Phone,
-  CheckCircle2,
-  AlertCircle,
-  Send,
-  ArrowUpRight,
-} from "lucide-react";
+import {Mail,MapPin,Phone,CheckCircle2,AlertCircle,Send,ArrowUpRight,Clock,ChevronDown,} from "lucide-react";
+
+    // 1. BUSINESS DETAILS (same on every page and on Google Business Profile) 
 
 const SITE_URL = "https://fixbuginfotech.online";
 
+const BUSINESS = {
+  name: "Fixbug Infotech",
+  phone: "+91 7776069948",
+  phoneHref: "+917776069948",
+  email: "fixbuginfotech@gmail.com",
+  street: "Sharifa Residency, B-FF4, Nagamasjid",
+  locality: "Ponda",
+  region: "Goa",
+  postalCode: "403401",
+};
+
+const FULL_ADDRESS = `${BUSINESS.street}, ${BUSINESS.locality}, ${BUSINESS.region} ${BUSINESS.postalCode}, India`;
+const MAP_QUERY = encodeURIComponent(FULL_ADDRESS);
+// TIP: once your Google Business Profile is live, replace this with the URL from
+// Google Maps > Share > Embed a map, so the pin lands exactly on your office.
+const MAP_EMBED_SRC = `https://www.google.com/maps?q=${MAP_QUERY}&output=embed`;
+const MAP_DIRECTIONS_URL = `https://www.google.com/maps/search/?api=1&query=${MAP_QUERY}`;
+
+// TODO: add your real profiles, e.g. { name: "LinkedIn", url: "https://www.linkedin.com/company/your-page" }
+// The section stays hidden while this list is empty.
+const SOCIALS = [];
+
+const INTERESTS = [
+  "Website development",
+  "Custom software",
+  "Mobile app development",
+  "AI & automation",
+  "Cloud & DevOps",
+  "IT support & maintenance",
+  "Software training course",
+  "Internship",
+  "Job application",
+  "Something else",
+];
+
+const QUICK_ENQUIRIES = [
+  { label: "Get a software quote", subject: "Software project quote" },
+  { label: "Website or app enquiry", subject: "Website or app development enquiry" },
+  { label: "Training course enquiry", subject: "Software training enquiry" },
+  { label: "Internship application", subject: "Internship application" },
+];
+
+const FAQS = [
+  {
+    q: "How do I get a quote for a website, app or custom software?",
+    a: "Fill in the form with a short description of what you need, or call or email us. We will discuss your requirements and reply with a clear scope, timeline and quote.",
+  },
+  {
+    q: "How soon will I get a reply?",
+    a: `We aim to respond to every message within 1 business day. For urgent enquiries, call us on ${BUSINESS.phone}.`,
+  },
+  {
+    q: "How can I join a software training course or apply for an internship?",
+    a: "Send us a message with the course or role you are interested in, or use the Enquire Now and Apply Now buttons on our careers page, which fill in the subject for you. We will share the syllabus, batch details and next steps.",
+  },
+  {
+    q: "Where is Fixbug Infotech located?",
+    a: `Our office is at ${BUSINESS.street}, ${BUSINESS.locality}, ${BUSINESS.region} ${BUSINESS.postalCode}, India. We serve businesses and students across Goa, including Margao, Panaji, Vasco and Mapusa.`,
+  },
+  {
+    q: "Do you work with businesses outside Ponda and Goa?",
+    a: "Yes. We work with clients across India through calls and video meetings, and we are happy to meet in person if you are in or near Ponda.",
+  },
+  {
+    q: "Who owns the code and content built for my project?",
+    a: "Ownership terms are agreed in writing before the project starts, so you know exactly what you will receive when the work is complete.",
+  },
+];
+
+const inputClass = (hasError) =>
+  `w-full bg-cream px-4 py-3 rounded-xl border ${
+    hasError
+      ? "border-red-500 focus:border-red-500 ring-1 ring-red-500/20"
+      : "border-cream-border focus:border-accent"
+  } text-charcoal text-sm focus:outline-none transition-colors placeholder:text-muted/50`;
+
+const labelClass =
+  "block text-xs font-semibold uppercase tracking-wider text-charcoal mb-2";
+
+function FieldError({ id, message }) {
+  if (!message) return null;
+  return (
+    <p
+      id={id}
+      className="text-xs text-red-500 mt-1.5 flex items-center gap-1 font-medium"
+    >
+      <AlertCircle className="w-3.5 h-3.5" aria-hidden="true" />
+      <span>{message}</span>
+    </p>
+  );
+}
+
+/*   2. FORM   */
 function ContactFormContent() {
   const searchParams = useSearchParams();
   const initialSubject = searchParams.get("subject") || "";
@@ -24,19 +112,17 @@ function ContactFormContent() {
     fullName: "",
     email: "",
     phone: "",
+    interest: "",
     subject: initialSubject,
     message: "",
-    company: "",
+    company: "", // honeypot
   });
 
+  // Keeps the subject in sync when a quick-enquiry / Apply link changes the URL
   useEffect(() => {
     const subj = searchParams.get("subject");
-
     if (subj) {
-      setFormData((prev) => ({
-        ...prev,
-        subject: subj,
-      }));
+      setFormData((prev) => ({ ...prev, subject: subj }));
     }
   }, [searchParams]);
 
@@ -55,8 +141,7 @@ function ContactFormContent() {
     if (!formData.email.trim()) {
       errs.email = "Email address is required";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      errs.email =
-        "Please enter a valid email address (e.g. name@domain.com)";
+      errs.email = "Please enter a valid email address (e.g. name@domain.com)";
     }
 
     if (!formData.phone.trim()) {
@@ -85,18 +170,11 @@ function ContactFormContent() {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
 
     if (errors[name]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: null,
-      }));
+      setErrors((prev) => ({ ...prev, [name]: null }));
     }
-
     if (toastMessage) {
       setToastMessage(null);
     }
@@ -105,8 +183,13 @@ function ContactFormContent() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const validationErrors = validate();
+    // Honeypot: real visitors never fill this. Pretend success and stop.
+    if (formData.company) {
+      setIsSubmitted(true);
+      return;
+    }
 
+    const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
@@ -117,12 +200,24 @@ function ContactFormContent() {
     setToastMessage(null);
 
     try {
+      // The API keeps receiving the same fields as before. The selected
+      // interest is added to the top of the message so it reaches your inbox
+      // without any backend change.
+      const payload = {
+        fullName: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        subject: formData.subject,
+        message: formData.interest
+          ? `Interested in: ${formData.interest}\n\n${formData.message}`
+          : formData.message,
+        company: formData.company,
+      };
+
       const response = await fetch("/api/contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
 
       const data = await response.json();
@@ -131,17 +226,14 @@ function ContactFormContent() {
         throw new Error(data.message || "Something went wrong");
       }
 
-      // Show the existing success screen.
-      // Do NOT clear formData here because the success screen
-      // displays the submitted name and subject.
+      // Keep formData: the success screen shows the submitted name and subject.
       setIsSubmitted(true);
     } catch (error) {
       console.error("Contact form error:", error);
-
       setToastMessage({
         text:
           error.message ||
-          "Failed to send message. Please try again.",
+          `Failed to send your message. Please try again or call us on ${BUSINESS.phone}.`,
         type: "error",
       });
     } finally {
@@ -151,34 +243,31 @@ function ContactFormContent() {
 
   const resetForm = () => {
     setIsSubmitted(false);
-
     setFormData({
       fullName: "",
       email: "",
       phone: "",
+      interest: "",
       subject: "",
       message: "",
       company: "",
     });
-
     setErrors({});
     setToastMessage(null);
   };
 
   return (
     <div className="bg-cream-soft p-8 sm:p-10 md:p-12 rounded-3xl border border-cream-border shadow-xs relative">
-      {/* Error Message Banner */}
       {toastMessage && (
         <div
           role="alert"
           aria-live="assertive"
-          className="mb-6 p-4 rounded-2xl flex items-center gap-3 transition-all duration-300 bg-red-50 text-red-900 border border-red-200"
+          className="mb-6 p-4 rounded-2xl flex items-center gap-3 bg-red-50 text-red-900 border border-red-200"
         >
           <AlertCircle
             className="w-5 h-5 text-red-600 shrink-0"
             aria-hidden="true"
           />
-
           <span className="text-xs sm:text-sm font-medium">
             {toastMessage.text}
           </span>
@@ -186,29 +275,35 @@ function ContactFormContent() {
       )}
 
       {isSubmitted ? (
-        <div className="text-center py-10 space-y-6">
+        <div className="text-center py-10 space-y-6" role="status">
           <div className="w-16 h-16 bg-accent/15 text-accent rounded-full flex items-center justify-center mx-auto">
-            <CheckCircle2
-              className="w-8 h-8"
-              aria-hidden="true"
-            />
+            <CheckCircle2 className="w-8 h-8" aria-hidden="true" />
           </div>
 
           <div className="space-y-2">
             <h3 className="text-3xl font-bold tracking-tight text-charcoal">
-              Message Received!
+              Message received!
             </h3>
-
             <p className="text-muted text-sm sm:text-base max-w-md mx-auto leading-relaxed">
               Thank you,{" "}
               <span className="font-semibold text-charcoal">
                 {formData.fullName}
               </span>
-              . Our technical leads have received your inquiry regarding{" "}
+              . We have received your enquiry about{" "}
               <span className="font-semibold text-charcoal">
                 &ldquo;{formData.subject}&rdquo;
               </span>{" "}
-              and will connect with you shortly.
+              and will get back to you shortly.
+            </p>
+            <p className="text-muted text-sm">
+              In a hurry? Call us on{" "}
+              <a
+                href={`tel:${BUSINESS.phoneHref}`}
+                className="font-semibold text-charcoal hover:text-accent transition-colors"
+              >
+                {BUSINESS.phone}
+              </a>
+              .
             </p>
           </div>
 
@@ -218,12 +313,8 @@ function ContactFormContent() {
               onClick={resetForm}
               className="inline-flex items-center gap-2 border border-charcoal text-charcoal px-7 py-3 rounded-full text-sm font-semibold hover:bg-charcoal hover:text-cream-soft transition-all duration-300"
             >
-              <span>Send Another Message</span>
-
-              <ArrowUpRight
-                className="w-4 h-4"
-                aria-hidden="true"
-              />
+              <span>Send another message</span>
+              <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
             </button>
           </div>
         </div>
@@ -236,13 +327,11 @@ function ContactFormContent() {
         >
           <div>
             <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-charcoal mb-1.5">
-              Send Us a Message
+              Send us a message
             </h3>
-
             <p className="text-xs sm:text-sm text-muted">
-              Whether you have a project inquiry, partnership proposal,
-              or job application — we respond to every message within 1
-              business day.
+              Project enquiry, training course, internship or job application -
+              tell us what you need and we will get back to you.
             </p>
           </div>
 
@@ -251,10 +340,7 @@ function ContactFormContent() {
             className="absolute -left-[9999px] opacity-0 pointer-events-none"
             aria-hidden="true"
           >
-            <label htmlFor="company">
-              Company
-            </label>
-
+            <label htmlFor="company">Company</label>
             <input
               id="company"
               type="text"
@@ -266,225 +352,133 @@ function ContactFormContent() {
             />
           </div>
 
-          {/* Full Name Field */}
+          {/* Full name */}
           <div>
-            <label
-              htmlFor="fullName"
-              className="block text-xs font-semibold uppercase tracking-wider text-charcoal mb-2"
-            >
+            <label htmlFor="fullName" className={labelClass}>
               Full Name <span className="text-accent">*</span>
             </label>
-
             <input
               id="fullName"
               type="text"
               name="fullName"
               value={formData.fullName}
               onChange={handleChange}
-              placeholder="e.g. Alex Morgan"
+              placeholder="Your full name"
               autoComplete="name"
               aria-invalid={!!errors.fullName}
-              aria-describedby={
-                errors.fullName ? "fullName-error" : undefined
-              }
-              className={`w-full bg-cream px-4 py-3 rounded-xl border ${
-                errors.fullName
-                  ? "border-red-500 focus:border-red-500 ring-1 ring-red-500/20"
-                  : "border-cream-border focus:border-accent"
-              } text-charcoal text-sm focus:outline-none transition-colors placeholder:text-muted/50`}
+              aria-describedby={errors.fullName ? "fullName-error" : undefined}
+              className={inputClass(errors.fullName)}
             />
-
-            {errors.fullName && (
-              <p
-                id="fullName-error"
-                className="text-xs text-red-500 mt-1.5 flex items-center gap-1 font-medium"
-              >
-                <AlertCircle
-                  className="w-3.5 h-3.5"
-                  aria-hidden="true"
-                />
-
-                <span>{errors.fullName}</span>
-              </p>
-            )}
+            <FieldError id="fullName-error" message={errors.fullName} />
           </div>
 
-          {/* Email & Phone Grid */}
+          {/* Email & phone */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {/* Email */}
             <div>
-              <label
-                htmlFor="email"
-                className="block text-xs font-semibold uppercase tracking-wider text-charcoal mb-2"
-              >
-                Email Address{" "}
-                <span className="text-accent">*</span>
+              <label htmlFor="email" className={labelClass}>
+                Email Address <span className="text-accent">*</span>
               </label>
-
               <input
                 id="email"
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                placeholder="alex@example.com"
+                placeholder="you@example.com"
                 autoComplete="email"
                 aria-invalid={!!errors.email}
-                aria-describedby={
-                  errors.email ? "email-error" : undefined
-                }
-                className={`w-full bg-cream px-4 py-3 rounded-xl border ${
-                  errors.email
-                    ? "border-red-500 focus:border-red-500 ring-1 ring-red-500/20"
-                    : "border-cream-border focus:border-accent"
-                } text-charcoal text-sm focus:outline-none transition-colors placeholder:text-muted/50`}
+                aria-describedby={errors.email ? "email-error" : undefined}
+                className={inputClass(errors.email)}
               />
-
-              {errors.email && (
-                <p
-                  id="email-error"
-                  className="text-xs text-red-500 mt-1.5 flex items-center gap-1 font-medium"
-                >
-                  <AlertCircle
-                    className="w-3.5 h-3.5"
-                    aria-hidden="true"
-                  />
-
-                  <span>{errors.email}</span>
-                </p>
-              )}
+              <FieldError id="email-error" message={errors.email} />
             </div>
 
-            {/* Phone */}
             <div>
-              <label
-                htmlFor="phone"
-                className="block text-xs font-semibold uppercase tracking-wider text-charcoal mb-2"
-              >
-                Phone Number{" "}
-                <span className="text-accent">*</span>
+              <label htmlFor="phone" className={labelClass}>
+                Phone Number <span className="text-accent">*</span>
               </label>
-
               <input
                 id="phone"
                 type="tel"
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                placeholder="+91 98765 43210"
+                placeholder="+91 90000 00000"
                 autoComplete="tel"
                 aria-invalid={!!errors.phone}
-                aria-describedby={
-                  errors.phone ? "phone-error" : undefined
-                }
-                className={`w-full bg-cream px-4 py-3 rounded-xl border ${
-                  errors.phone
-                    ? "border-red-500 focus:border-red-500 ring-1 ring-red-500/20"
-                    : "border-cream-border focus:border-accent"
-                } text-charcoal text-sm focus:outline-none transition-colors placeholder:text-muted/50`}
+                aria-describedby={errors.phone ? "phone-error" : undefined}
+                className={inputClass(errors.phone)}
               />
-
-              {errors.phone && (
-                <p
-                  id="phone-error"
-                  className="text-xs text-red-500 mt-1.5 flex items-center gap-1 font-medium"
-                >
-                  <AlertCircle
-                    className="w-3.5 h-3.5"
-                    aria-hidden="true"
-                  />
-
-                  <span>{errors.phone}</span>
-                </p>
-              )}
+              <FieldError id="phone-error" message={errors.phone} />
             </div>
           </div>
 
-          {/* Subject Field */}
+          {/* Interest */}
           <div>
-            <label
-              htmlFor="subject"
-              className="block text-xs font-semibold uppercase tracking-wider text-charcoal mb-2"
-            >
+            <label htmlFor="interest" className={labelClass}>
+              I am interested in
+            </label>
+            <div className="relative">
+              <select
+                id="interest"
+                name="interest"
+                value={formData.interest}
+                onChange={handleChange}
+                className={`${inputClass(false)} appearance-none pr-10 cursor-pointer`}
+              >
+                <option value="">Select an option (optional)</option>
+                {INTERESTS.map((opt) => (
+                  <option key={opt} value={opt}>
+                    {opt}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown
+                className="w-4 h-4 text-muted absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none"
+                aria-hidden="true"
+              />
+            </div>
+          </div>
+
+          {/* Subject */}
+          <div>
+            <label htmlFor="subject" className={labelClass}>
               Subject <span className="text-accent">*</span>
             </label>
-
             <input
               id="subject"
               type="text"
               name="subject"
               value={formData.subject}
               onChange={handleChange}
-              placeholder="e.g. Project Consultation / AI Engineering Inquiry"
+              placeholder="e.g. Website quote / MERN training enquiry"
               aria-invalid={!!errors.subject}
-              aria-describedby={
-                errors.subject ? "subject-error" : undefined
-              }
-              className={`w-full bg-cream px-4 py-3 rounded-xl border ${
-                errors.subject
-                  ? "border-red-500 focus:border-red-500 ring-1 ring-red-500/20"
-                  : "border-cream-border focus:border-accent"
-              } text-charcoal text-sm focus:outline-none transition-colors placeholder:text-muted/50`}
+              aria-describedby={errors.subject ? "subject-error" : undefined}
+              className={inputClass(errors.subject)}
             />
-
-            {errors.subject && (
-              <p
-                id="subject-error"
-                className="text-xs text-red-500 mt-1.5 flex items-center gap-1 font-medium"
-              >
-                <AlertCircle
-                  className="w-3.5 h-3.5"
-                  aria-hidden="true"
-                />
-
-                <span>{errors.subject}</span>
-              </p>
-            )}
+            <FieldError id="subject-error" message={errors.subject} />
           </div>
 
-          {/* Message Field */}
+          {/* Message */}
           <div>
-            <label
-              htmlFor="message"
-              className="block text-xs font-semibold uppercase tracking-wider text-charcoal mb-2"
-            >
+            <label htmlFor="message" className={labelClass}>
               Message <span className="text-accent">*</span>
             </label>
-
             <textarea
               id="message"
               name="message"
               rows={4}
               value={formData.message}
               onChange={handleChange}
-              placeholder="Tell us about your project goals, technical requirements, timeline, or relevant experience..."
+              placeholder="Tell us about your project, or the course or role you are interested in..."
               aria-invalid={!!errors.message}
-              aria-describedby={
-                errors.message ? "message-error" : undefined
-              }
-              className={`w-full bg-cream p-4 rounded-xl border ${
-                errors.message
-                  ? "border-red-500 focus:border-red-500 ring-1 ring-red-500/20"
-                  : "border-cream-border focus:border-accent"
-              } text-charcoal text-sm focus:outline-none transition-colors resize-none placeholder:text-muted/50`}
+              aria-describedby={errors.message ? "message-error" : undefined}
+              className={`${inputClass(errors.message)} resize-none`}
             />
-
-            {errors.message && (
-              <p
-                id="message-error"
-                className="text-xs text-red-500 mt-1.5 flex items-center gap-1 font-medium"
-              >
-                <AlertCircle
-                  className="w-3.5 h-3.5"
-                  aria-hidden="true"
-                />
-
-                <span>{errors.message}</span>
-              </p>
-            )}
+            <FieldError id="message-error" message={errors.message} />
           </div>
 
-          {/* Submit Button */}
+          {/* Submit */}
           <div>
             <button
               type="submit"
@@ -494,16 +488,14 @@ function ContactFormContent() {
               {isSubmitting ? (
                 <>
                   <div
-                    className="w-4 h-4 border-2 border-cream-soft/30 border-t-cream-soft rounded-full animate-spin"
+                    className="w-4 h-4 border-2 border-cream-soft/30 border-t-cream-soft rounded-full motion-safe:animate-spin"
                     aria-hidden="true"
                   />
-
-                  <span>Sending Message...</span>
+                  <span>Sending message...</span>
                 </>
               ) : (
                 <>
-                  <span>Send Message</span>
-
+                  <span>Send message</span>
                   <Send
                     className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                     aria-hidden="true"
@@ -514,8 +506,7 @@ function ContactFormContent() {
           </div>
 
           <p className="text-center text-xs text-muted pt-1">
-            🔒 Your contact information is never shared with third
-            parties.
+            We use your details only to respond to your enquiry.
           </p>
         </form>
       )}
@@ -523,366 +514,338 @@ function ContactFormContent() {
   );
 }
 
+/* ==========================================================================
+   3. PAGE
+   ========================================================================== */
 export default function ContactPageClient() {
-  const faqs = [
-    {
-      q: "What does your typical engagement model look like?",
-      a: "We offer dedicated engineering squads, milestone-based turnkey project delivery, and specialized AI advisory sprints depending on your team's velocity and requirements.",
-    },
-    {
-      q: "How quickly can we see a functioning prototype?",
-      a: "For most AI products and custom web platforms, our architecture sprints deliver an interactive, functioning proof-of-concept within 10 to 14 business days.",
-    },
-    {
-      q: "Who retains Intellectual Property (IP) ownership?",
-      a: "You retain 100% of the IP, codebases, custom fine-tuned model weights, and proprietary data artifacts from the moment of inception.",
-    },
-    {
-      q: "How do you handle enterprise data privacy and AI security?",
-      a: "We operate with strict zero-retention data policies, zero-trust cloud isolation, and ensure no client proprietary data is ever used to train public foundation models.",
-    },
-  ];
-
-  // ProfessionalService / ContactPage structured data
-  const contactJsonLd = {
+  const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "@id": `${SITE_URL}/#organization`,
-    name: "Fixbug Infotech",
-    url: SITE_URL,
-    email: "hello@fixbuginfotech.com",
-    telephone: "+91-98765-43210",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "Tech Hub Park, Bandra Kurla Complex",
-      addressLocality: "Mumbai",
-      addressRegion: "Maharashtra",
-      postalCode: "400051",
-      addressCountry: "IN",
-    },
-    openingHoursSpecification: {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-      ],
-      opens: "09:00",
-      closes: "19:00",
-    },
-    sameAs: [
-      "https://linkedin.com",
-      "https://twitter.com",
-      "https://github.com",
-      "https://dribbble.com",
-    ],
-  };
-
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.q,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: faq.a,
-      },
-    })),
-  };
-
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
+    "@graph": [
       {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: SITE_URL,
+        "@type": "ContactPage",
+        "@id": `${SITE_URL}/contact#webpage`,
+        url: `${SITE_URL}/contact`,
+        name: "Contact Fixbug Infotech - Software Company in Ponda, Goa",
+        about: { "@id": `${SITE_URL}/#organization` },
       },
       {
-        "@type": "ListItem",
-        position: 2,
-        name: "Contact",
-        item: `${SITE_URL}/contact`,
+        "@type": ["ProfessionalService", "EducationalOrganization"],
+        "@id": `${SITE_URL}/#organization`,
+        name: BUSINESS.name,
+        url: SITE_URL,
+        email: BUSINESS.email,
+        telephone: BUSINESS.phone,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: BUSINESS.street,
+          addressLocality: BUSINESS.locality,
+          addressRegion: BUSINESS.region,
+          postalCode: BUSINESS.postalCode,
+          addressCountry: "IN",
+        },
+        areaServed: [
+          { "@type": "City", name: "Ponda" },
+          { "@type": "AdministrativeArea", name: "Goa" },
+          { "@type": "Country", name: "India" },
+        ],
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "customer service",
+          telephone: BUSINESS.phone,
+          email: BUSINESS.email,
+          areaServed: "IN",
+        },
+        // TODO: add openingHoursSpecification once your working hours are final
+        ...(SOCIALS.length > 0 && { sameAs: SOCIALS.map((s) => s.url) }),
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Contact",
+            item: `${SITE_URL}/contact`,
+          },
+        ],
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: FAQS.map((faq) => ({
+          "@type": "Question",
+          name: faq.q,
+          acceptedAnswer: { "@type": "Answer", text: faq.a },
+        })),
       },
     ],
   };
 
   return (
     <div className="min-h-screen bg-cream text-charcoal flex flex-col selection:bg-accent selection:text-cream-soft">
-      {/* Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(contactJsonLd),
-        }}
-      />
-
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(faqJsonLd),
-        }}
-      />
-
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(breadcrumbJsonLd),
+          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
         }}
       />
 
       <Navbar variant="solid" />
 
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-16 md:pt-40 md:pb-20 overflow-hidden border-b border-cream-border/60">
-        <div className="absolute inset-0 bg-linear-to-b from-cream-soft via-cream to-cream pointer-events-none" />
+      <main className="grow">
+        {/* ================= HERO ================= */}
+        <section
+          aria-labelledby="contact-hero-heading"
+          className="relative pt-32 pb-16 md:pt-40 md:pb-20 overflow-hidden border-b border-cream-border/60"
+        >
+          <div className="absolute inset-0 bg-linear-to-b from-cream-soft via-cream to-cream pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-          <div className="max-w-3xl">
-            <span className="inline-block text-accent text-xs md:text-sm font-semibold tracking-widest uppercase mb-4">
-              • GET IN TOUCH • START A CONVERSATION
-            </span>
+          <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+            <div className="max-w-3xl">
+              <nav aria-label="Breadcrumb" className="mb-6 text-sm text-muted">
+                <ol className="flex items-center gap-2">
+                  <li>
+                    <Link href="/" className="hover:text-accent transition-colors">
+                      Home
+                    </Link>
+                  </li>
+                  <li aria-hidden="true">/</li>
+                  <li aria-current="page" className="text-charcoal font-medium">
+                    Contact
+                  </li>
+                </ol>
+              </nav>
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-charcoal leading-[1.08] mb-6">
-              Let&apos;s Build Something{" "}
-              <span className="font-display italic text-accent font-normal block sm:inline">
-                Extraordinary.
+              <span className="inline-block text-accent text-xs md:text-sm font-semibold tracking-widest uppercase mb-4">
+                • Get in touch • Ponda, Goa
               </span>
-            </h1>
 
-            <p className="text-muted text-lg md:text-xl leading-relaxed max-w-2xl font-normal">
-              Have questions about building an AI product, modernizing
-              your web architecture, or joining our engineering
-              collective? Reach out below.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Form & Info Grid */}
-      <section
-        className="py-20 md:py-28"
-        aria-label="Contact information and form"
-      >
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-            {/* Left Column */}
-            <div className="lg:col-span-5 space-y-8">
-              <div>
-                <span className="text-accent text-xs md:text-sm font-semibold tracking-widest uppercase mb-2 block">
-                  DIRECT CONTACT
-                </span>
-
-                <h2 className="text-3xl font-bold tracking-tight mb-4">
-                  Connect with our{" "}
-                  <span className="font-display italic text-accent font-normal">
-                    team
-                  </span>
-                </h2>
-
-                <p className="text-muted text-base leading-relaxed">
-                  Direct channels to our technical leads and
-                  architecture directors. We review and respond to every
-                  message personally.
-                </p>
-              </div>
-
-              {/* Response SLA Badge */}
-              <div className="inline-flex items-center gap-3 bg-cream-soft border border-cream-border px-4 py-3 rounded-2xl text-sm font-medium text-charcoal">
-                <span
-                  className="text-accent text-base"
-                  aria-hidden="true"
-                >
-                  ⚡
-                </span>
-
-                <span>
-                  Guaranteed technical response within{" "}
-                  <strong className="font-semibold text-charcoal">
-                    1 business day
-                  </strong>
-                </span>
-              </div>
-
-              {/* Info Cards */}
-              <address className="space-y-4 pt-2 not-italic">
-                {/* Headquarters */}
-                <div className="flex items-start gap-4 p-5 rounded-2xl bg-cream-soft border border-cream-border">
-                  <div className="w-10 h-10 rounded-xl bg-cream flex items-center justify-center text-accent shrink-0 border border-cream-border">
-                    <MapPin
-                      className="w-5 h-5"
-                      aria-hidden="true"
-                    />
-                  </div>
-
-                  <div>
-                    <h3 className="text-sm font-semibold text-charcoal mb-1">
-                      Headquarters
-                    </h3>
-
-                    <p className="text-sm text-muted leading-relaxed">
-                      Fixbug Infotech Headquarters
-                      <br />
-                      Tech Hub Park, Bandra Kurla Complex,
-                      <br />
-                      Mumbai, Maharashtra 400051, India
-                    </p>
-                  </div>
-                </div>
-
-                {/* Email */}
-                <div className="flex items-start gap-4 p-5 rounded-2xl bg-cream-soft border border-cream-border">
-                  <div className="w-10 h-10 rounded-xl bg-cream flex items-center justify-center text-accent shrink-0 border border-cream-border">
-                    <Mail
-                      className="w-5 h-5"
-                      aria-hidden="true"
-                    />
-                  </div>
-
-                  <div>
-                    <h3 className="text-sm font-semibold text-charcoal mb-1">
-                      Email Inquiries
-                    </h3>
-
-                    <a
-                      href="mailto:hello@fixbuginfotech.com"
-                      className="text-sm text-charcoal font-medium hover:text-accent transition-colors block"
-                    >
-                      hello@fixbuginfotech.com
-                    </a>
-
-                    <a
-                      href="mailto:careers@fixbuginfotech.com"
-                      className="text-xs text-muted hover:text-accent transition-colors"
-                    >
-                      careers@fixbuginfotech.com
-                    </a>
-                  </div>
-                </div>
-
-                {/* Telephone */}
-                <div className="flex items-start gap-4 p-5 rounded-2xl bg-cream-soft border border-cream-border">
-                  <div className="w-10 h-10 rounded-xl bg-cream flex items-center justify-center text-accent shrink-0 border border-cream-border">
-                    <Phone
-                      className="w-5 h-5"
-                      aria-hidden="true"
-                    />
-                  </div>
-
-                  <div>
-                    <h3 className="text-sm font-semibold text-charcoal mb-1">
-                      Telephone
-                    </h3>
-
-                    <a
-                      href="tel:+919876543210"
-                      className="text-sm text-charcoal font-medium hover:text-accent transition-colors block"
-                    >
-                      +91 98765 43210
-                    </a>
-
-                    <span className="text-xs text-muted">
-                      Mon — Fri, 9:00 AM — 7:00 PM IST
-                    </span>
-                  </div>
-                </div>
-              </address>
-
-              {/* Social Channels */}
-              <div className="pt-4">
-                <span className="text-xs font-semibold uppercase tracking-wider text-muted block mb-3">
-                  Follow Our Research & Updates
-                </span>
-
-                <div className="flex flex-wrap gap-3">
-                  {[
-                    {
-                      name: "LinkedIn",
-                      url: "https://linkedin.com",
-                    },
-                    {
-                      name: "Twitter / X",
-                      url: "https://twitter.com",
-                    },
-                    {
-                      name: "GitHub",
-                      url: "https://github.com",
-                    },
-                    {
-                      name: "Dribbble",
-                      url: "https://dribbble.com",
-                    },
-                  ].map((social) => (
-                    <a
-                      key={social.name}
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`Fixbug Infotech on ${social.name} (opens in new tab)`}
-                      className="text-xs font-medium bg-cream-soft px-4 py-2 rounded-full border border-cream-border text-charcoal hover:border-accent hover:text-accent transition-colors"
-                    >
-                      {social.name}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column */}
-            <div className="lg:col-span-7">
-              <Suspense
-                fallback={
-                  <div className="bg-cream-soft p-12 rounded-3xl border border-cream-border animate-pulse h-96 flex items-center justify-center text-muted">
-                    Loading contact form...
-                  </div>
-                }
+              <h1
+                id="contact-hero-heading"
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-charcoal leading-[1.08] mb-6"
               >
-                <ContactFormContent />
-              </Suspense>
+                Contact a Software Company in{" "}
+                <span className="font-display italic text-accent font-normal block sm:inline">
+                  Ponda, Goa.
+                </span>
+              </h1>
+
+              <p className="text-muted text-lg md:text-xl leading-relaxed max-w-2xl font-normal">
+                Need a website, custom software or AI automation - or want to
+                join our software training in Ponda? Send us a message, call us
+                or visit our office.
+              </p>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* FAQ Section */}
-      <section
-        className="py-20 md:py-28 bg-cream-soft border-t border-cream-border"
-        aria-labelledby="faq-heading"
-      >
-        <div className="max-w-5xl mx-auto px-6 md:px-12">
-          <div className="text-center mb-16">
-            <span className="text-accent text-xs md:text-sm font-semibold tracking-widest uppercase mb-2 block">
-              FREQUENTLY ASKED QUESTIONS
-            </span>
-
-            <h2
-              id="faq-heading"
-              className="text-3xl md:text-4xl font-bold tracking-tight mb-4"
-            >
-              Everything You Need to{" "}
-              <span className="font-display italic text-accent font-normal">
-                Know
-              </span>
-            </h2>
-
-            <p className="text-muted text-base max-w-xl mx-auto">
-              Clear answers to how we engage, protect your intellectual
-              property, and deliver high-velocity engineering.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {faqs.map((faq, idx) => (
-              <div
-                key={idx}
-                className="bg-cream border border-cream-border p-6 sm:p-8 rounded-2xl flex flex-col justify-between"
-              >
+        {/* ================= CONTACT INFO + FORM ================= */}
+        <section
+          className="py-20 md:py-28"
+          aria-label="Contact information and form"
+        >
+          <div className="max-w-7xl mx-auto px-6 md:px-12">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+              {/* Left column */}
+              <div className="lg:col-span-5 space-y-8">
                 <div>
+                  <span className="text-accent text-xs md:text-sm font-semibold tracking-widest uppercase mb-2 block">
+                    Direct contact
+                  </span>
+                  <h2 className="text-3xl font-bold tracking-tight mb-4">
+                    Talk to our{" "}
+                    <span className="font-display italic text-accent font-normal">
+                      team in Ponda
+                    </span>
+                  </h2>
+                  <p className="text-muted text-base leading-relaxed">
+                    Call, email or drop by. Whether it is a project, a training
+                    course or a career question, a real person from our team
+                    will read your message and reply.
+                  </p>
+                </div>
+
+                <div className="inline-flex items-center gap-3 bg-cream-soft border border-cream-border px-4 py-3 rounded-2xl text-sm font-medium text-charcoal">
+                  <Clock className="w-4 h-4 text-accent shrink-0" aria-hidden="true" />
+                  <span>
+                    We aim to reply within{" "}
+                    <strong className="font-semibold">1 business day</strong>
+                  </span>
+                </div>
+
+                {/* Quick enquiries (pre-fill the subject) */}
+                <div>
+                  <span className="text-xs font-semibold uppercase tracking-wider text-muted block mb-3">
+                    What can we help with?
+                  </span>
+                  <ul className="flex flex-wrap gap-2 list-none p-0 m-0">
+                    {QUICK_ENQUIRIES.map((q) => (
+                      <li key={q.label}>
+                        <Link
+                          href={`/contact?subject=${encodeURIComponent(q.subject)}`}
+                          scroll={false}
+                          className="inline-block text-xs font-medium bg-cream-soft px-4 py-2 rounded-full border border-cream-border text-charcoal hover:border-accent hover:text-accent transition-colors"
+                        >
+                          {q.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Info cards */}
+                <address className="space-y-4 not-italic">
+                  <div className="flex items-start gap-4 p-5 rounded-2xl bg-cream-soft border border-cream-border">
+                    <div className="w-10 h-10 rounded-xl bg-cream flex items-center justify-center text-accent shrink-0 border border-cream-border">
+                      <MapPin className="w-5 h-5" aria-hidden="true" />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-semibold text-charcoal mb-1">
+                        Our office in Ponda
+                      </h3>
+                      <p className="text-sm text-muted leading-relaxed">
+                        {BUSINESS.name}
+                        <br />
+                        {BUSINESS.street},
+                        <br />
+                        {BUSINESS.locality}, {BUSINESS.region}{" "}
+                        {BUSINESS.postalCode}, India
+                      </p>
+                      <a
+                        href={MAP_DIRECTIONS_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-xs font-semibold text-accent hover:underline mt-2"
+                      >
+                        Get directions
+                        <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
+                        <span className="sr-only">(opens in new tab)</span>
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4 p-5 rounded-2xl bg-cream-soft border border-cream-border">
+                    <div className="w-10 h-10 rounded-xl bg-cream flex items-center justify-center text-accent shrink-0 border border-cream-border">
+                      <Phone className="w-5 h-5" aria-hidden="true" />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-semibold text-charcoal mb-1">
+                        Call us
+                      </h3>
+                      <a
+                        href={`tel:${BUSINESS.phoneHref}`}
+                        className="text-sm text-charcoal font-medium hover:text-accent transition-colors block"
+                      >
+                        {BUSINESS.phone}
+                      </a>
+                      <span className="text-xs text-muted">
+                        For quick questions about projects and courses
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4 p-5 rounded-2xl bg-cream-soft border border-cream-border">
+                    <div className="w-10 h-10 rounded-xl bg-cream flex items-center justify-center text-accent shrink-0 border border-cream-border">
+                      <Mail className="w-5 h-5" aria-hidden="true" />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-semibold text-charcoal mb-1">
+                        Email us
+                      </h3>
+                      <a
+                        href={`mailto:${BUSINESS.email}`}
+                        className="text-sm text-charcoal font-medium hover:text-accent transition-colors break-all"
+                      >
+                        {BUSINESS.email}
+                      </a>
+                    </div>
+                  </div>
+                </address>
+
+                {/* Map */}
+                <div className="rounded-2xl overflow-hidden border border-cream-border bg-cream-soft">
+                  <iframe
+                    title="Fixbug Infotech office location on Google Maps, Ponda, Goa"
+                    src={MAP_EMBED_SRC}
+                    width="100%"
+                    height="260"
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="block border-0"
+                  />
+                </div>
+
+                {/* Social links - hidden until you add real profiles */}
+                {SOCIALS.length > 0 && (
+                  <div>
+                    <span className="text-xs font-semibold uppercase tracking-wider text-muted block mb-3">
+                      Follow us
+                    </span>
+                    <div className="flex flex-wrap gap-3">
+                      {SOCIALS.map((social) => (
+                        <a
+                          key={social.name}
+                          href={social.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`Fixbug Infotech on ${social.name} (opens in new tab)`}
+                          className="text-xs font-medium bg-cream-soft px-4 py-2 rounded-full border border-cream-border text-charcoal hover:border-accent hover:text-accent transition-colors"
+                        >
+                          {social.name}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Right column */}
+              <div className="lg:col-span-7">
+                <Suspense
+                  fallback={
+                    <div className="bg-cream-soft p-12 rounded-3xl border border-cream-border motion-safe:animate-pulse h-96 flex items-center justify-center text-muted">
+                      Loading contact form...
+                    </div>
+                  }
+                >
+                  <ContactFormContent />
+                </Suspense>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ================= FAQ ================= */}
+        <section
+          className="py-20 md:py-28 bg-cream-soft border-t border-cream-border"
+          aria-labelledby="faq-heading"
+        >
+          <div className="max-w-5xl mx-auto px-6 md:px-12">
+            <div className="text-center mb-16">
+              <span className="text-accent text-xs md:text-sm font-semibold tracking-widest uppercase mb-2 block">
+                Frequently asked questions
+              </span>
+              <h2
+                id="faq-heading"
+                className="text-3xl md:text-4xl font-bold tracking-tight mb-4"
+              >
+                Before you{" "}
+                <span className="font-display italic text-accent font-normal">
+                  get in touch
+                </span>
+              </h2>
+              <p className="text-muted text-base max-w-xl mx-auto">
+                Quick answers about quotes, training, our Ponda office and how
+                we work with clients.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {FAQS.map((faq) => (
+                <div
+                  key={faq.q}
+                  className="bg-cream border border-cream-border p-6 sm:p-8 rounded-2xl"
+                >
                   <h3 className="text-lg font-bold text-charcoal mb-3 flex items-start gap-2">
                     <span
                       className="text-accent font-display italic text-xl"
@@ -890,19 +853,15 @@ export default function ContactPageClient() {
                     >
                       Q.
                     </span>
-
                     <span>{faq.q}</span>
                   </h3>
-
-                  <p className="text-muted text-sm leading-relaxed">
-                    {faq.a}
-                  </p>
+                  <p className="text-muted text-sm leading-relaxed">{faq.a}</p>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
       <Footer />
     </div>

@@ -2,402 +2,529 @@ import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Link from "next/link";
-import {ArrowUpRight,ArrowRight,Sparkles,Bot,Globe,Workflow,Cloud,Layers,Cpu,ShieldCheck,Zap,Code2,Database,Terminal,} from "lucide-react";
+import {ArrowUpRight,ArrowRight,Code2,Globe,Smartphone,Sparkles,Cloud,Wrench,Zap,GraduationCap,MapPin,Phone,Mail,ChevronDown,} from "lucide-react";
 
+ 
 const SITE_URL = "https://fixbuginfotech.online";
 
+const BUSINESS = {
+  name: "Fixbug Infotech",
+  phone: "+91 7776069948", // TODO
+  phoneHref: "+91 7776069948", // TODO
+  email: "fixbuginfotech@gmail.com", // TODO
+  street: "Sharifa Residency, B-FF4, Nagamasjid Ponda, Goa", // TODO
+  locality: "Ponda",
+  region: "Goa",
+  postalCode: "403401",
+};
+
+/* ==========================================================================
+   2. SEO METADATA
+   ========================================================================== */
 export const metadata = {
-  title: "AI & Software Engineering Services | Fixbug Infotech",
+  metadataBase: new URL(SITE_URL),
+  title: "Software & IT Services in Ponda, Goa | Fixbug Infotech",
   description:
-    "Explore Fixbug Infotech's core engineering capabilities: AI product development, autonomous workflow automation, full-stack web platforms, cloud & DevOps architecture, and AI UX design.",
+    "Custom software, website, mobile app, AI automation, cloud & IT support services in Ponda, Goa by Fixbug Infotech. Get a free quote today.",
   keywords: [
-    "AI software engineering services",
-    "LLM development services",
-    "RAG pipeline development",
-    "workflow automation agency",
-    "Next.js development services",
-    "cloud DevOps consulting",
-    "AI UX design",
-    "Fixbug Infotech services",,
-    "Software services in ponda",
-    "IT services in ponda",
+    "software services in Ponda",
+    "IT services in Ponda",
+    "software development company in Ponda",
+    "website development in Ponda",
+    "web design company Ponda Goa",
+    "mobile app development Goa",
+    "custom software development Goa",
+    "ERP CRM software Goa",
+    "AI automation services Goa",
+    "cloud and DevOps services India",
+    "IT support and maintenance Ponda",
+    "software training in Ponda",
+    "Fixbug Infotech services",
   ],
-  alternates: {
-    canonical: "/service",
-  },
+  alternates: { canonical: "/service" },
   openGraph: {
     type: "website",
     url: `${SITE_URL}/service`,
     siteName: "Fixbug Infotech",
-    title: "AI & Software Engineering Services | Fixbug Infotech",
+    locale: "en_IN",
+    title: "Software & IT Services in Ponda, Goa | Fixbug Infotech",
     description:
-      "We architect bespoke AI systems and embed cutting-edge intelligence into enterprise workflows — from LLMs and RAG to cloud-native infrastructure.",
+      "Custom software, websites, mobile apps, AI automation, cloud and IT support for businesses in Ponda, Goa and beyond.",
     images: [
       {
-        url: "/og-service.jpg", // add a 1200x630 image to /public
+        url: "/og-service.jpg", // TODO: add a 1200x630 image to /public
         width: 1200,
         height: 630,
-        alt: "Fixbug Infotech — Services",
+        alt: "Fixbug Infotech - software and IT services in Ponda, Goa",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI & Software Engineering Services | Fixbug Infotech",
+    title: "Software & IT Services in Ponda, Goa | Fixbug Infotech",
     description:
-      "We architect bespoke AI systems and embed cutting-edge intelligence into enterprise workflows — from LLMs and RAG to cloud-native infrastructure.",
+      "Custom software, websites, mobile apps, AI automation, cloud and IT support in Ponda, Goa.",
     images: ["/og-service.jpg"],
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
   },
 };
 
+    // 3. CONTENT (keep only what you genuinely offer) 
 const services = [
   {
-    id: "01",
-    title: "AI Product Development & LLMs",
-    category: "Foundation Models & Custom AI",
+    id: "custom-software",
+    title: "Custom Software Development",
+    category: "Business Software",
     description:
-      "From custom fine-tuned foundation models to production-grade RAG pipelines, we construct proprietary intelligence natively into your business applications.",
+      "Software built around the way your business actually works - from billing and inventory to full ERP and CRM systems - replacing spreadsheets and manual paperwork.",
     capabilities: [
-      "Custom LLM Fine-Tuning & Quantization",
-      "Retrieval-Augmented Generation (RAG)",
-      "Autonomous AI Agent Workflows",
-      "Semantic Search & Vector Databases",
-      "Guardrails & Safety Alignment",
+      "Billing, inventory & POS systems",
+      "ERP & CRM tools",
+      "Admin dashboards & reports",
+      "Role-based access & data security",
+      "Migration from Excel and old systems",
     ],
-    impact: "99.4% intent precision across 10M+ queries",
-    icon: Bot,
+    idealFor: "Shops, clinics, schools, distributors and growing SMEs",
+    icon: Code2,
   },
   {
-    id: "02",
-    title: "Full-Stack Web & Platform Engineering",
-    category: "High-Performance Systems",
+    id: "web-development",
+    title: "Website & Web App Development",
+    category: "Web Platforms",
     description:
-      "Ultra-fast Next.js and React applications built for scale, resilience, and conversion with modern frontend craftsmanship and rock-solid backend architecture.",
+      "Fast, secure and search-friendly websites and web applications built with Next.js, React and the MERN stack, designed to turn visitors into customers.",
     capabilities: [
-      "Next.js App Router & Server Components",
-      "Micro-frontends & Modular Architecture",
-      "Real-time WebSockets & Event Streaming",
-      "High-throughput REST & GraphQL APIs",
-      "Edge Computing & Global CDN Caching",
+      "Business & company websites",
+      "Next.js & React web applications",
+      "E-commerce & online booking systems",
+      "UI/UX design & clickable prototypes",
+      "Technical SEO & Core Web Vitals",
     ],
-    impact: "Sub-50ms TTFB on global edge distribution",
+    idealFor: "Local businesses, startups and service providers",
     icon: Globe,
   },
   {
-    id: "03",
-    title: "Autonomous Workflows & Automation",
-    category: "Process Intelligence",
+    id: "mobile-apps",
+    title: "Mobile App Development",
+    category: "Mobile Apps",
     description:
-      "Multi-agent autonomous systems that eliminate manual bottlenecks, execute complex multi-step tasks, and intelligently monitor enterprise operations 24/7.",
+      "Android and iOS apps for bookings, delivery, e-commerce and internal operations, connected to a reliable back-end and built for smooth everyday use.",
     capabilities: [
-      "Autonomous Multi-Agent Orchestration",
-      "Intelligent Document Processing (IDP)",
-      "Event-Driven Architecture & Message Queues",
-      "Deep CRM, ERP & Legacy System Integrations",
-      "Self-Healing Failure Recovery Loops",
+      "Android & iOS apps",
+      "Cross-platform development",
+      "Payments & push notifications",
+      "API and back-end development",
+      "Play Store & App Store publishing",
     ],
-    impact: "85% reduction in manual data processing hours",
-    icon: Workflow,
+    idealFor: "Booking, delivery, retail and service businesses",
+    icon: Smartphone,
   },
   {
-    id: "04",
-    title: "Cloud Infrastructure & DevOps",
-    category: "Resilience & Scalability",
+    id: "ai-automation",
+    title: "AI & Workflow Automation",
+    category: "Intelligent Automation",
     description:
-      "Cloud-native architectures engineered for zero-downtime scalability, stringent enterprise compliance, and automated continuous deployment pipelines.",
+      "Practical AI that saves time: chatbots, document search and automated workflows that take repetitive work off your team and plug into the tools you already use.",
     capabilities: [
-      "Kubernetes Cluster Orchestration",
-      "Infrastructure as Code (Terraform / Pulumi)",
-      "Serverless Compute & Edge Functions",
-      "Observability, Datadog & Prometheus Metrics",
-      "Zero-Trust Cloud Security Architecture",
+      "AI chatbots & virtual assistants",
+      "Search over your own documents (RAG)",
+      "Multi-step workflow automation",
+      "Invoice & form data extraction",
+      "Integrations with CRM, ERP, email and messaging",
     ],
-    impact: "99.99% system availability SLA guaranteed",
+    idealFor: "Teams spending hours on repetitive manual work",
+    icon: Sparkles,
+  },
+  {
+    id: "cloud-devops",
+    title: "Cloud & DevOps",
+    category: "Infrastructure",
+    description:
+      "Reliable hosting and deployment on AWS, Azure or GCP, with automated pipelines and monitoring so your software stays fast, secure and online.",
+    capabilities: [
+      "AWS, Azure & GCP deployment",
+      "Docker & CI/CD pipelines",
+      "Backups, monitoring & uptime alerts",
+      "Cost-conscious cloud setup",
+      "SSL, security hardening & access control",
+    ],
+    idealFor: "Products moving to the cloud or outgrowing basic hosting",
     icon: Cloud,
   },
   {
-    id: "05",
-    title: "Product Strategy & AI UX Design",
-    category: "Human-AI Interaction",
+    id: "it-support",
+    title: "IT Support & Maintenance",
+    category: "Ongoing Care",
     description:
-      "Designing interfaces where AI interactions feel effortless, explainable, and delightfully intuitive for non-technical users and enterprise operators alike.",
+      "Keep your website, app or software healthy after launch with regular updates, bug fixes, security patches and quick technical support.",
     capabilities: [
-      "Interaction Design for Generative AI",
-      "Comprehensive Design Systems & Tokens",
-      "Rapid Functional Prototyping",
-      "Usability Testing & Cognitive Load Audits",
-      "Accessibility & Multi-modal Voice/Text UX",
+      "Bug fixing & troubleshooting",
+      "Updates & security patches",
+      "Performance tuning",
+      "Hosting, domain & email management",
+      "Small feature additions",
     ],
-    impact: "4.9/5 CSAT rating across deployed platforms",
-    icon: Layers,
+    idealFor: "Businesses with existing software that needs a reliable team",
+    icon: Wrench,
   },
 ];
 
 const processSteps = [
   {
     step: "01",
-    title: "Discovery & Feasibility",
+    title: "Discovery & requirements",
     description:
-      "We dissect your technical architecture, evaluate AI model viability, and define rigorous benchmark metrics before writing a single line of code.",
+      "We listen, ask the right questions and write down exactly what you need, with scope, timeline and cost agreed before any code is written.",
   },
   {
     step: "02",
-    title: "Architecture & Prototyping",
+    title: "Design & prototype",
     description:
-      "Rapidly standing up end-to-end working prototypes to stress-test prompt engineering, data pipelines, and UI responsiveness under real workloads.",
+      "We turn requirements into wireframes and a clickable prototype so you can see and approve how it will look and work.",
   },
   {
     step: "03",
-    title: "Iterative Build & AI Tuning",
+    title: "Build & review",
     description:
-      "Production-grade engineering sprints with automated CI/CD, synthetic test generation, fine-tuning evaluations, and continuous client reviews.",
+      "Development happens in short milestones with regular demos, so you can give feedback early instead of waiting until the end.",
   },
   {
     step: "04",
-    title: "Scale, Observability & Handoff",
+    title: "Launch & support",
     description:
-      "Full cloud deployment with multi-region failover, latency telemetry, automated drift detection, and comprehensive documentation handoff.",
+      "We deploy your project, hand over documentation and stay available for updates, fixes and future improvements.",
   },
 ];
 
 const techStack = [
-  { name: "Next.js 15", category: "Frontend" },
-  { name: "React 19", category: "Frontend" },
-  { name: "TypeScript", category: "Language" },
+  { name: "React", category: "Frontend" },
+  { name: "Next.js", category: "Frontend" },
   { name: "Tailwind CSS", category: "Styling" },
-  { name: "PyTorch", category: "AI / ML" },
-  { name: "OpenAI GPT-4o", category: "Foundation Models" },
-  { name: "Claude 3.5 Sonnet", category: "Foundation Models" },
-  { name: "LangChain & LlamaIndex", category: "AI Frameworks" },
-  { name: "Pinecone & pgvector", category: "Vector DBs" },
-  { name: "FastAPI / Python", category: "Backend" },
-  { name: "Node.js & Go", category: "Backend" },
-  { name: "PostgreSQL & Redis", category: "Databases" },
-  { name: "Kubernetes & Docker", category: "DevOps" },
-  { name: "AWS & GCP", category: "Cloud" },
-  { name: "Terraform", category: "IaC" },
-  { name: "Datadog", category: "Monitoring" },
+  { name: "JavaScript & TypeScript", category: "Languages" },
+  { name: "Node.js & Express", category: "Backend" },
+  { name: "Python", category: "Backend & AI" },
+  { name: "MongoDB", category: "Database" },
+  { name: "PostgreSQL", category: "Database" },
+  { name: "REST & GraphQL", category: "APIs" },
+  { name: "OpenAI & Claude APIs", category: "AI models" },
+  { name: "Docker & CI/CD", category: "DevOps" },
+  { name: "AWS & Azure", category: "Cloud" },
 ];
 
-export default function ServicesPage() {
-  // Service structured data — one entry per capability
-  const servicesJsonLd = services.map((service) => ({
-    "@context": "https://schema.org",
-    "@type": "Service",
-    serviceType: service.title,
-    name: service.title,
-    description: service.description,
-    provider: {
-      "@type": "Organization",
-      name: "Fixbug Infotech",
-      url: SITE_URL,
-    },
-    areaServed: "Worldwide",
-    category: service.category,
-  }));
+const training = [
+  {
+    title: "Full Stack Web Development (MERN)",
+    desc: "MongoDB, Express, React and Node.js through real projects.",
+  },
+  {
+    title: "Python Programming & Automation",
+    desc: "Beginner-friendly Python, scripting and backend basics.",
+  },
+  {
+    title: "Cloud Computing & DevOps",
+    desc: "AWS / Azure, Docker, Linux and CI/CD fundamentals.",
+  },
+  {
+    title: "Internship & Career Preparation",
+    desc: "Live projects, resume building and mock interviews.",
+  },
+];
 
-  // HowTo-style methodology as an ItemList (process steps)
-  const processJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: "Fixbug Infotech Delivery Methodology",
-    itemListElement: processSteps.map((p, idx) => ({
-      "@type": "ListItem",
-      position: idx + 1,
-      name: p.title,
-      description: p.description,
-    })),
+const faqs = [
+  {
+    q: "How much does custom software or a website cost in Ponda?",
+    a: "The cost depends on the features you need, the number of users and any integrations. After a short discovery call we share a written scope, timeline and quote so there are no surprises later.",
+  },
+  {
+    q: "How long does it take to build a website or app?",
+    a: "A typical business website can often be planned and launched within a few weeks, while custom software and mobile apps are split into milestones with regular demos. We confirm the timeline in writing before we start.",
+  },
+  {
+    q: "Do you provide support after the project goes live?",
+    a: "Yes. We offer maintenance and support covering bug fixes, updates, security patches and small enhancements, so your software keeps working as your business grows.",
+  },
+  {
+    q: "Do you work with companies outside Ponda?",
+    a: "Yes. We serve businesses across Goa, including Margao, Panaji, Vasco and Mapusa, and work with clients across India remotely through video calls, with in-person meetings available in Ponda.",
+  },
+  {
+    q: "Can you add AI or automation to our existing software?",
+    a: "In most cases, yes. We can add chatbots, document processing and workflow automation to your current systems and connect them with the tools your team already uses.",
+  },
+];
+
+/* ==========================================================================
+   4. PAGE
+   ========================================================================== */
+export default function ServicesPage() {
+  const orgRef = {
+    "@type": "Organization",
+    "@id": `${SITE_URL}/#organization`,
+    name: BUSINESS.name,
+    url: SITE_URL,
   };
 
-  const breadcrumbJsonLd = {
+  const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+    "@graph": [
+      ...services.map((service) => ({
+        "@type": "Service",
+        "@id": `${SITE_URL}/service#${service.id}`,
+        serviceType: service.title,
+        name: service.title,
+        description: service.description,
+        category: service.category,
+        provider: orgRef,
+        areaServed: [
+          { "@type": "City", name: "Ponda" },
+          { "@type": "AdministrativeArea", name: "Goa" },
+          { "@type": "Country", name: "India" },
+        ],
+      })),
       {
-        "@type": "ListItem",
-        position: 2,
-        name: "Services",
-        item: `${SITE_URL}/service`,
+        "@type": "ItemList",
+        name: "Fixbug Infotech project delivery process",
+        itemListElement: processSteps.map((p, idx) => ({
+          "@type": "ListItem",
+          position: idx + 1,
+          name: p.title,
+          description: p.description,
+        })),
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Services",
+            item: `${SITE_URL}/service`,
+          },
+        ],
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: faqs.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
       },
     ],
   };
 
   return (
     <div className="min-h-screen bg-cream text-charcoal flex flex-col selection:bg-accent selection:text-cream-soft">
-      {servicesJsonLd.map((jsonLd, idx) => (
-        <script
-          key={idx}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-      ))}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(processJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+        }}
       />
 
       <Navbar variant="solid" />
 
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden border-b border-cream-border/60">
-        <div className="absolute inset-0 bg-linear-to-b from-cream-soft via-cream to-cream pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-          <div className="max-w-3xl">
-            <span className="inline-block text-accent text-xs md:text-sm font-semibold tracking-widest uppercase mb-4">
-              • WHAT WE DELIVER • CAPABILITIES
-            </span>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-charcoal leading-[1.08] mb-6">
-              Engineering the Next Generation of{" "}
-              <span className="font-display italic text-accent font-normal block sm:inline">
-                Intelligence.
-              </span>
-            </h1>
-            <p className="text-muted text-lg md:text-xl leading-relaxed max-w-2xl font-normal">
-              We architect bespoke software systems and embed cutting-edge AI
-              into enterprise workflows — transforming complex technological
-              challenges into seamless, profitable digital assets.
-            </p>
-          </div>
-        </div>
-      </section>
+      <main className="grow">
+        {/* ================= HERO ================= */}
+        <section
+          aria-labelledby="services-hero-heading"
+          className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden border-b border-cream-border/60"
+        >
+          <div className="absolute inset-0 bg-linear-to-b from-cream-soft via-cream to-cream pointer-events-none" />
+          <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+            <div className="max-w-3xl">
+              <nav aria-label="Breadcrumb" className="mb-6 text-sm text-muted">
+                <ol className="flex items-center gap-2">
+                  <li>
+                    <Link href="/" className="hover:text-accent transition-colors">
+                      Home
+                    </Link>
+                  </li>
+                  <li aria-hidden="true">/</li>
+                  <li aria-current="page" className="text-charcoal font-medium">
+                    Services
+                  </li>
+                </ol>
+              </nav>
 
-      {/* Editorial Services List */}
-      <section className="py-20 md:py-28" aria-label="Our services">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-6 border-b border-cream-border">
-            <div>
-              <span className="text-accent text-xs md:text-sm font-semibold tracking-widest uppercase mb-2 block">
-                CORE DISCIPLINES
+              <span className="inline-block text-accent text-xs md:text-sm font-semibold tracking-widest uppercase mb-4">
+                • Software • IT Services • Training
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
-                Our Engineering{" "}
-                <span className="font-display italic text-accent font-normal">
-                  Matrix
+              <h1
+                id="services-hero-heading"
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-charcoal leading-[1.08] mb-6"
+              >
+                Software Development &amp; IT Services in{" "}
+                <span className="font-display italic text-accent font-normal block sm:inline">
+                  Ponda, Goa.
                 </span>
-              </h2>
-            </div>
-            <p className="text-muted text-sm md:text-base max-w-md mt-4 md:mt-0">
-              Every solution is custom-engineered from the ground up, built for
-              enterprise scale, performance, and long-term maintainability.
-            </p>
-          </div>
+              </h1>
+              <p className="text-muted text-lg md:text-xl leading-relaxed max-w-2xl font-normal">
+                Fixbug Infotech is a software and IT company in Ponda. From
+                business websites and custom software to mobile apps, AI
+                automation and cloud - we build and maintain the technology
+                your business runs on.
+              </p>
 
-          <div className="space-y-0">
-            {services.map((service) => {
-              const Icon = service.icon;
-              return (
-                <article
-                  key={service.id}
-                  id={`service-${service.id}`}
-                  className="group relative border-t border-cream-border py-12 md:py-16 transition-colors duration-300 hover:bg-cream-soft/70 px-4 md:px-8 rounded-2xl"
+              <div className="flex flex-wrap items-center gap-4 mt-10">
+                <Link
+                  href="/contact"
+                  className="group inline-flex items-center gap-2 bg-charcoal text-cream px-7 py-3.5 rounded-full font-medium text-sm sm:text-base hover:bg-accent transition-all duration-300 shadow-md hover:shadow-lg"
                 >
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                    {/* ID & Category */}
-                    <div className="lg:col-span-3 flex flex-col justify-between">
-                      <div className="flex items-center gap-4 mb-2">
-                        <span className="text-3xl md:text-4xl font-light text-muted/60 group-hover:text-accent transition-colors" aria-hidden="true">
-                          {service.id}
-                        </span>
+                  <span>Get a Free Quote</span>
+                  <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
+                </Link>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 border border-charcoal/30 text-charcoal px-7 py-3.5 rounded-full font-medium text-sm sm:text-base hover:border-charcoal hover:bg-charcoal/5 transition-all duration-300"
+                >
+                  <span>Software Training in Ponda</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ================= SERVICES LIST ================= */}
+        <section
+          id="services"
+          className="py-20 md:py-28"
+          aria-labelledby="services-heading"
+        >
+          <div className="max-w-7xl mx-auto px-6 md:px-12">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-6 border-b border-cream-border">
+              <div>
+                <span className="text-accent text-xs md:text-sm font-semibold tracking-widest uppercase mb-2 block">
+                  Core services
+                </span>
+                <h2
+                  id="services-heading"
+                  className="text-3xl md:text-4xl font-bold tracking-tight"
+                >
+                  What we build for businesses in{" "}
+                  <span className="font-display italic text-accent font-normal">
+                    Ponda &amp; Goa
+                  </span>
+                </h2>
+              </div>
+              <p className="text-muted text-sm md:text-base max-w-md mt-4 md:mt-0">
+                Every project is planned around your goals and built to be
+                fast, secure and easy to maintain.
+              </p>
+            </div>
+
+            <div>
+              {services.map((service) => {
+                const Icon = service.icon;
+                return (
+                  <article
+                    key={service.id}
+                    id={service.id}
+                    className="group relative border-t border-cream-border py-12 md:py-16 transition-colors duration-300 hover:bg-cream-soft/70 px-4 md:px-8 rounded-2xl scroll-mt-28"
+                  >
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                      {/* Category */}
+                      <div className="lg:col-span-3 flex items-center lg:items-start lg:flex-col gap-4">
+                        <div className="w-12 h-12 rounded-xl bg-cream flex items-center justify-center border border-cream-border text-charcoal group-hover:text-accent group-hover:border-accent/40 transition-all shrink-0">
+                          <Icon className="w-6 h-6" aria-hidden="true" />
+                        </div>
                         <span className="text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full bg-cream-border/50 text-muted">
                           {service.category}
                         </span>
                       </div>
-                      <div className="hidden lg:block mt-6">
-                        <div className="w-12 h-12 rounded-xl bg-cream flex items-center justify-center border border-cream-border text-charcoal group-hover:text-accent group-hover:border-accent/40 transition-all">
-                          <Icon className="w-6 h-6" aria-hidden="true" />
+
+                      {/* Title & description */}
+                      <div className="lg:col-span-5">
+                        <h3 className="text-2xl md:text-3xl font-bold tracking-tight mb-4 text-charcoal group-hover:text-accent transition-colors">
+                          {service.title}
+                        </h3>
+                        <p className="text-muted text-base leading-relaxed mb-6">
+                          {service.description}
+                        </p>
+                        <div className="inline-flex items-start gap-2 text-xs font-semibold text-charcoal bg-cream px-3.5 py-2 rounded-2xl border border-cream-border">
+                          <Zap className="w-3.5 h-3.5 text-accent mt-0.5 shrink-0" aria-hidden="true" />
+                          <span>Ideal for: {service.idealFor}</span>
+                        </div>
+                      </div>
+
+                      {/* Capabilities */}
+                      <div className="lg:col-span-4 flex flex-col justify-between h-full pt-2 lg:pt-0">
+                        <div>
+                          <h4 className="text-xs font-semibold uppercase tracking-wider text-muted/70 block mb-3">
+                            What&apos;s included
+                          </h4>
+                          <ul className="space-y-2">
+                            {service.capabilities.map((cap) => (
+                              <li
+                                key={cap}
+                                className="flex items-center gap-2 text-sm text-charcoal/80"
+                              >
+                                <span className="w-1.5 h-1.5 rounded-full bg-accent shrink-0" aria-hidden="true" />
+                                <span>{cap}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        <div className="mt-8 flex justify-end">
+                          <Link
+                            href="/contact"
+                            aria-label={`Get a quote for ${service.title}`}
+                            className="inline-flex items-center gap-2 text-sm font-semibold text-charcoal group-hover:text-accent transition-colors"
+                          >
+                            <span>Get a quote</span>
+                            <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
+                          </Link>
                         </div>
                       </div>
                     </div>
-
-                    {/* Title & Description */}
-                    <div className="lg:col-span-5">
-                      <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-4 text-charcoal group-hover:text-accent transition-colors">
-                        {service.title}
-                      </h2>
-                      <p className="text-muted text-base leading-relaxed mb-6">
-                        {service.description}
-                      </p>
-
-                      <div className="inline-flex items-center gap-2 text-xs font-semibold text-charcoal bg-cream px-3.5 py-1.5 rounded-full border border-cream-border">
-                        <Zap className="w-3.5 h-3.5 text-accent" aria-hidden="true" />
-                        <span>{service.impact}</span>
-                      </div>
-                    </div>
-
-                    {/* Capabilities Tags */}
-                    <div className="lg:col-span-4 flex flex-col justify-between h-full pt-2 lg:pt-0">
-                      <div>
-                        <span className="text-xs font-semibold uppercase tracking-wider text-muted/70 block mb-3">
-                          Key Capabilities
-                        </span>
-                        <ul className="space-y-2">
-                          {service.capabilities.map((cap, i) => (
-                            <li
-                              key={i}
-                              className="flex items-center gap-2 text-sm text-charcoal/80"
-                            >
-                              <span className="w-1.5 h-1.5 rounded-full bg-accent shrink-0" aria-hidden="true" />
-                              <span>{cap}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      <div className="mt-8 flex justify-end">
-                        <Link
-                          href="/contact"
-                          aria-label={`Consult on ${service.title}`}
-                          className="inline-flex items-center gap-2 text-sm font-semibold text-charcoal group-hover:text-accent transition-colors"
-                        >
-                          <span>Consult on this</span>
-                          <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </article>
-              );
-            })}
+                  </article>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* How We Deliver Process Section */}
-      <section className="py-20 md:py-28 bg-cream-soft border-y border-cream-border" aria-labelledby="methodology-heading">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="max-w-2xl mb-16">
-            <span className="text-accent text-xs md:text-sm font-semibold tracking-widest uppercase mb-2 block">
-              METHODOLOGY
-            </span>
-            <h2 id="methodology-heading" className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
-              How We{" "}
-              <span className="font-display italic text-accent font-normal">
-                Deliver
+        {/* ================= PROCESS ================= */}
+        <section
+          className="py-20 md:py-28 bg-cream-soft border-y border-cream-border"
+          aria-labelledby="methodology-heading"
+        >
+          <div className="max-w-7xl mx-auto px-6 md:px-12">
+            <div className="max-w-2xl mb-16">
+              <span className="text-accent text-xs md:text-sm font-semibold tracking-widest uppercase mb-2 block">
+                Our process
               </span>
-            </h2>
-            <p className="text-muted text-base md:text-lg">
-              A disciplined, milestone-driven execution framework engineered to
-              eliminate risk and maximize velocity from day one.
-            </p>
-          </div>
-
-          <ol className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 list-none p-0 m-0">
-            {processSteps.map((p, idx) => (
-              <li
-                key={p.step}
-                className="relative bg-cream p-8 rounded-2xl border border-cream-border hover:border-accent/40 transition-all flex flex-col justify-between"
+              <h2
+                id="methodology-heading"
+                className="text-3xl md:text-5xl font-bold tracking-tight mb-4"
               >
-                <div>
-                  <span className="text-4xl font-display italic text-accent font-normal block mb-6" aria-hidden="true">
+                How we{" "}
+                <span className="font-display italic text-accent font-normal">
+                  deliver
+                </span>
+              </h2>
+              <p className="text-muted text-base md:text-lg">
+                A clear, step-by-step process so you always know what is
+                happening, what it costs and when it will be ready.
+              </p>
+            </div>
+
+            <ol className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 list-none p-0 m-0">
+              {processSteps.map((p) => (
+                <li
+                  key={p.step}
+                  className="bg-cream p-8 rounded-2xl border border-cream-border hover:border-accent/40 transition-colors"
+                >
+                  <span
+                    className="text-4xl font-display italic text-accent font-normal block mb-6"
+                    aria-hidden="true"
+                  >
                     {p.step}
                   </span>
                   <h3 className="text-xl font-bold tracking-tight mb-3">
@@ -406,90 +533,209 @@ export default function ServicesPage() {
                   <p className="text-muted text-sm leading-relaxed">
                     {p.description}
                   </p>
-                </div>
-                <div className="mt-6 pt-4 border-t border-cream-border/60 flex items-center justify-between text-xs text-muted">
-                  <span>Phase 0{idx + 1}</span>
-                  <ArrowRight className="w-4 h-4 text-accent" aria-hidden="true" />
-                </div>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      {/* Tech Stack Grid */}
-      <section className="py-20 md:py-28" aria-labelledby="techstack-heading">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-accent text-xs md:text-sm font-semibold tracking-widest uppercase mb-2 block">
-              TECHNOLOGY ECOSYSTEM
-            </span>
-            <h2 id="techstack-heading" className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-              Our Core{" "}
-              <span className="font-display italic text-accent font-normal">
-                Tech Stack
-              </span>
-            </h2>
-            <p className="text-muted text-base">
-              We leverage modern battle-tested technologies and state-of-the-art
-              AI frameworks to build future-proof platforms.
-            </p>
+                </li>
+              ))}
+            </ol>
           </div>
+        </section>
 
-          <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 list-none p-0 m-0">
-            {techStack.map((tech, idx) => (
-              <li
-                key={idx}
-                className="bg-cream-soft border border-cream-border p-5 rounded-xl hover:border-accent/50 hover:bg-cream transition-all group flex flex-col justify-between"
+        {/* ================= TECH STACK ================= */}
+        <section className="py-20 md:py-28" aria-labelledby="techstack-heading">
+          <div className="max-w-7xl mx-auto px-6 md:px-12">
+            <div className="text-center max-w-2xl mx-auto mb-16">
+              <span className="text-accent text-xs md:text-sm font-semibold tracking-widest uppercase mb-2 block">
+                Technologies
+              </span>
+              <h2
+                id="techstack-heading"
+                className="text-3xl md:text-4xl font-bold tracking-tight mb-4"
               >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-medium uppercase tracking-wider text-muted/70">
+                Our core{" "}
+                <span className="font-display italic text-accent font-normal">
+                  tech stack
+                </span>
+              </h2>
+              <p className="text-muted text-base">
+                Modern, proven technologies that keep your software fast,
+                secure and easy for any developer to maintain.
+              </p>
+            </div>
+
+            <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 list-none p-0 m-0">
+              {techStack.map((tech) => (
+                <li
+                  key={tech.name}
+                  className="bg-cream-soft border border-cream-border p-5 rounded-xl hover:border-accent/50 hover:bg-cream transition-colors group"
+                >
+                  <span className="block text-xs font-medium uppercase tracking-wider text-muted/70 mb-2">
                     {tech.category}
                   </span>
-                  <Sparkles className="w-3.5 h-3.5 text-cream-border group-hover:text-accent transition-colors" aria-hidden="true" />
-                </div>
-                <span className="font-semibold text-charcoal text-base md:text-lg group-hover:text-accent transition-colors">
-                  {tech.name}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* Closing CTA Band */}
-      <section className="py-20 md:py-28 bg-charcoal text-cream-soft relative overflow-hidden">
-        <div className="max-w-5xl mx-auto px-6 md:px-12 text-center relative z-10">
-          <span className="inline-block text-accent text-xs md:text-sm font-semibold tracking-widest uppercase mb-4">
-            • START YOUR TRANSFORMATION •
-          </span>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-6 leading-tight">
-            Have a project in mind? Let&apos;s build something{" "}
-            <span className="font-display italic text-accent font-normal">
-              intelligent.
-            </span>
-          </h2>
-          <p className="text-cream-soft/70 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light">
-            Book a complimentary architectural review with our engineering
-            directors to map out your software roadmap.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href="/contact"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-accent text-cream-soft px-8 py-4 rounded-full text-base font-semibold hover:bg-accent/90 transition-all shadow-lg hover:shadow-accent/20"
-            >
-              <span>Schedule Architecture Call</span>
-              <ArrowUpRight className="w-5 h-5" aria-hidden="true" />
-            </Link>
-            <Link
-              href="/product"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-cream-soft/30 text-cream-soft px-8 py-4 rounded-full text-base font-semibold hover:bg-cream-soft/10 transition-all"
-            >
-              <span>Explore Selected Work</span>
-            </Link>
+                  <span className="font-semibold text-charcoal text-base md:text-lg group-hover:text-accent transition-colors">
+                    {tech.name}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
-        </div>
-      </section>
+        </section>
+
+        {/* ================= TRAINING BAND ================= */}
+        <section
+          className="py-20 md:py-28 bg-cream-soft border-y border-cream-border"
+          aria-labelledby="training-band-heading"
+        >
+          <div className="max-w-7xl mx-auto px-6 md:px-12">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+              <div className="lg:col-span-5">
+                <span className="text-accent text-xs md:text-sm font-semibold tracking-widest uppercase mb-2 block">
+                  Software training in Ponda
+                </span>
+                <h2
+                  id="training-band-heading"
+                  className="text-3xl md:text-4xl font-bold tracking-tight mb-4"
+                >
+                  Want to learn the skills behind{" "}
+                  <span className="font-display italic text-accent font-normal">
+                    these services?
+                  </span>
+                </h2>
+                <p className="text-muted leading-relaxed mb-8">
+                  Alongside client work, Fixbug Infotech runs practical IT
+                  training in Ponda for students, freshers and career
+                  switchers, taught with the same tools and workflows we use
+                  on real projects.
+                </p>
+                <Link
+                  href="/contact"
+                  className="group inline-flex items-center gap-2 bg-charcoal text-cream px-7 py-3.5 rounded-full font-medium text-sm sm:text-base hover:bg-accent transition-all duration-300"
+                >
+                  <GraduationCap className="w-4 h-4" aria-hidden="true" />
+                  <span>View Training Courses</span>
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                </Link>
+              </div>
+
+              <ul className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 list-none p-0 m-0">
+                {training.map((t) => (
+                  <li
+                    key={t.title}
+                    className="p-6 rounded-2xl bg-cream border border-cream-border hover:border-accent/40 transition-colors"
+                  >
+                    <h3 className="text-lg font-bold text-charcoal mb-2">
+                      {t.title}
+                    </h3>
+                    <p className="text-sm text-muted leading-relaxed">
+                      {t.desc}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* ================= FAQ ================= */}
+        <section className="py-20 md:py-28" aria-labelledby="faq-heading">
+          <div className="max-w-4xl mx-auto px-6 md:px-12">
+            <div className="max-w-2xl mb-12">
+              <span className="text-accent text-xs md:text-sm font-semibold tracking-widest uppercase mb-2 block">
+                Frequently asked questions
+              </span>
+              <h2
+                id="faq-heading"
+                className="text-3xl md:text-4xl font-bold tracking-tight"
+              >
+                Common questions about our{" "}
+                <span className="font-display italic text-accent font-normal">
+                  IT services
+                </span>
+              </h2>
+            </div>
+
+            <div className="space-y-4">
+              {faqs.map((f) => (
+                <details
+                  key={f.q}
+                  className="group rounded-2xl bg-cream-soft border border-cream-border p-6 open:border-accent/40 transition-colors"
+                >
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left text-base sm:text-lg font-semibold text-charcoal [&::-webkit-details-marker]:hidden">
+                    <span>{f.q}</span>
+                    <ChevronDown
+                      className="w-5 h-5 shrink-0 text-accent transition-transform duration-300 group-open:rotate-180"
+                      aria-hidden="true"
+                    />
+                  </summary>
+                  <p className="mt-4 text-muted leading-relaxed">{f.a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ================= CLOSING CTA ================= */}
+        <section
+          className="py-20 md:py-28 bg-charcoal text-cream-soft relative overflow-hidden"
+          aria-labelledby="services-cta-heading"
+        >
+          <div className="absolute top-0 right-0 w-96 h-96 bg-accent/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="max-w-5xl mx-auto px-6 md:px-12 text-center relative z-10">
+            <span className="inline-block text-accent text-xs md:text-sm font-semibold tracking-widest uppercase mb-4">
+              • Start your project •
+            </span>
+            <h2
+              id="services-cta-heading"
+              className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-6 leading-tight"
+            >
+              Have a project in mind? Let&apos;s build it{" "}
+              <span className="font-display italic text-accent font-normal">
+                together.
+              </span>
+            </h2>
+            <p className="text-cream-soft/70 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light">
+              Tell us what you need and we will reply with a clear plan, a
+              timeline and a quote - no obligation.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14">
+              <Link
+                href="/contact"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-accent text-cream-soft px-8 py-4 rounded-full text-base font-semibold hover:bg-accent/90 transition-all shadow-lg hover:shadow-accent/20"
+              >
+                <span>Get a Free Quote</span>
+                <ArrowUpRight className="w-5 h-5" aria-hidden="true" />
+              </Link>
+              <Link
+                href="/product"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-cream-soft/30 text-cream-soft px-8 py-4 rounded-full text-base font-semibold hover:bg-cream-soft/10 transition-all"
+              >
+                <span>See Our Work</span>
+              </Link>
+            </div>
+
+            {/* NAP - must match Google Business Profile */}
+            <address className="not-italic flex flex-col md:flex-row items-center justify-center gap-x-10 gap-y-4 text-sm text-cream-soft/80 pt-8 border-t border-cream-soft/15">
+              <span className="inline-flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-accent" aria-hidden="true" />
+                {BUSINESS.name}, {BUSINESS.locality}, {BUSINESS.region}{" "}
+                {BUSINESS.postalCode}
+              </span>
+              <a
+                href={`tel:${BUSINESS.phoneHref}`}
+                className="inline-flex items-center gap-2 hover:text-accent transition-colors"
+              >
+                <Phone className="w-4 h-4 text-accent" aria-hidden="true" />
+                {BUSINESS.phone}
+              </a>
+              <a
+                href={`mailto:${BUSINESS.email}`}
+                className="inline-flex items-center gap-2 hover:text-accent transition-colors"
+              >
+                <Mail className="w-4 h-4 text-accent" aria-hidden="true" />
+                {BUSINESS.email}
+              </a>
+            </address>
+          </div>
+        </section>
+      </main>
 
       <Footer />
     </div>

@@ -1,52 +1,53 @@
 import CareerPageClient from "./CareerPageClient";
 
+const SITE_URL = "https://fixbuginfotech.online";
+
 export const metadata = {
-  title: "Careers — Join Fixbug Infotech | AI & Full-Stack Engineering Jobs",
+  metadataBase: new URL(SITE_URL),
+  title: "Careers, Internships & Training in Ponda, Goa | Fixbug Infotech",
   description:
-    "Explore open roles at Fixbug Infotech: Senior AI/ML Systems Engineer, Lead Full-Stack Engineer, Cloud & DevOps Architect, and AI Software Engineering Internship. Remote & hybrid positions in Mumbai and worldwide.",
+    "Explore IT jobs, internships and software training programs at Fixbug Infotech, a software company in Ponda, Goa. Freshers and final-year students welcome.",
   keywords: [
-    "Fixbug Infotech careers",
-    "AI engineer jobs India",
-    "full stack engineer jobs remote",
-    "DevOps architect jobs",
-    "AI internship Mumbai",
-    "machine learning engineer jobs",
-    "Next.js developer jobs",
-    "Software company in ponda",
-    "IT company in ponda",
-    "IT internship in ponda",
-    "Software internship in ponda",
-    
+    "IT jobs in Ponda",
+    "software jobs in Goa",
+    "internship in Ponda",
+    "software internship in Goa",
+    "fresher jobs in Goa",
+    "software training in Ponda",
+    "MERN stack training in Goa",
+    "Python course in Ponda",
+    "IT training institute in Ponda",
+    "careers at Fixbug Infotech",
   ],
-  alternates: {
-    canonical: "/career",
-  },
+  alternates: { canonical: "/career" },
   openGraph: {
     type: "website",
-    url: "https://fixbuginfotech.online/career",
+    url: `${SITE_URL}/career`,
     siteName: "Fixbug Infotech",
-    title: "Careers — Join Fixbug Infotech",
+    locale: "en_IN",
+    title: "Careers, Internships & Training in Ponda, Goa | Fixbug Infotech",
     description:
-      "We're hiring AI engineers, full-stack developers, and cloud architects. Explore open roles and internships at Fixbug Infotech.",
+      "IT jobs, software internships and hands-on training programs at a software company in Ponda, Goa.",
     images: [
       {
-        url: "/og-career.jpg", // add a 1200x630 image to /public
+        url: "/og-career.jpg", // TODO: add a 1200x630 image to /public
         width: 1200,
         height: 630,
-        alt: "Careers at Fixbug Infotech",
+        alt: "Careers, internships and training at Fixbug Infotech, Ponda, Goa",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Careers — Join Fixbug Infotech",
+    title: "Careers, Internships & Training in Ponda, Goa | Fixbug Infotech",
     description:
-      "We're hiring AI engineers, full-stack developers, and cloud architects. Explore open roles and internships.",
+      "IT jobs, software internships and training programs in Ponda, Goa.",
     images: ["/og-career.jpg"],
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
   },
 };
 
