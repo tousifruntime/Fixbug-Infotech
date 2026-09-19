@@ -336,9 +336,19 @@ const jsonLd = {
         },
       },
       skills: role.requiredSkills.join(", "),
-      experienceRequirements: role.experience,
+      "experienceRequirements" : {
+        "@type" : "OccupationalExperienceRequirements",
+        "monthsOfExperience" : "36"
+      },
       directApply: true,
-      // TODO: add baseSalary here - Google Jobs shows postings with salary more prominently
+      baseSalary:{
+         "@type": "MonetaryAmount",
+        "currency": "INR",
+        "value": {
+          "@type": "QuantitativeValue",
+          "value": 300000,
+          "unitText": "YEAR"
+      }}
     })),
     ...OPPORTUNITIES.filter((o) => o.type === "training").map((program) => ({
       "@type": "Course",
