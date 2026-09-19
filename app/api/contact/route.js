@@ -230,7 +230,7 @@ export async function POST(request) {
     // 9. Send via Resend
     const { error } = await resend.emails.send({
       from: "Website Contact <onboarding@resend.dev>", // Resend's test sender — works without domain verification. Swap this for a verified domain (e.g. contact@yourrealdomain.com) once you own and verify one at resend.com/domains
-      to: ["tousifwebwork@gmail.com"],
+      to: ["fixbuginfotech@gmail.com"],
       replyTo: clean.email,
       subject: `New inquiry: ${clean.subject}`,
       html: buildEmailHtml(clean),
